@@ -9,16 +9,17 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context),
-      body: ExpenseList(
-        categories: [
-          Category(nameCategory: 'Alimentação', valueCategory: 50.0),
-          Category(nameCategory: 'Transporte', valueCategory: 30.0),
-          Category(nameCategory: 'Lazer', valueCategory: 20.0),
-          Category(nameCategory: 'Saúde', valueCategory: 40.0),
-        ],
+      body: Center(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            ExpenseItem(category: 'Alimentação'),
+            ExpenseItem(category: 'Transporte'),
+            ExpenseItem(category: 'Lazer'),
+            ExpenseItem(category: 'Saúde'),
+          ],
+        ),
       ),
-      floatingActionButton: floatingActionButton(context),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 }
@@ -74,38 +75,34 @@ AppBar appBar(BuildContext context) {
   );
 }
 
-FloatingActionButton floatingActionButton(BuildContext context) {
-  return FloatingActionButton(
-    onPressed: () {
-      openExpenseBox(context);
-    },
-    child: const Icon(Icons.add),
-    backgroundColor: const Color.fromARGB(255, 143, 132, 132),
-  );
-}
-
 // quando o usario for inserir numa nova despesa, ele deve clicar no botao que chama esse metodo
 void openExpenseBox(BuildContext context) {
-  // Variável para armazenar a categoria selecionada
-  String selectedCategory = '';
-  double selectedValue = 0.0;
+  // Variáveis para armazenar os valores inseridos pelo usuário
+  String expenseName = '';
+  double expenseValue = 0.0;
   DateTime selectedDate = DateTime.now();
+
+  TextEditingController dateController = TextEditingController(text: selectedDate.toString().split(' ')[0]);
+
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
       title: const Text('Nova Despesa'),
       content: StatefulBuilder(
-        // Utilizamos StatefulBuilder para reconstruir a caixa de diálogo ao selecionar uma categoria
         builder: (BuildContext context, StateSetter setState) {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // TextFields para Nome, Valor e Data da Despesa
+              // TextField para inserir o nome da despesa
               TextField(
                 decoration: const InputDecoration(
                   labelText: 'Nome',
                 ),
+                onChanged: (value) {
+                  expenseName = value;
+                },
               ),
+              // TextField para inserir o valor da despesa
               TextField(
                 decoration: const InputDecoration(
                   labelText: 'Valor',
@@ -113,13 +110,13 @@ void openExpenseBox(BuildContext context) {
                 ),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 onChanged: (value) {
-                  selectedValue = double.tryParse(value)!;
+                  expenseValue = double.tryParse(value) ?? 0.0;
                 },
               ),
+              // TextField com um DatePicker para selecionar a data da despesa
               TextField(
                 readOnly: true,
-                controller: TextEditingController(
-                    text: selectedDate.toString().split(' ')[0]),
+                controller: dateController,
                 decoration: InputDecoration(
                   labelText: 'Data',
                   suffixIcon: IconButton(
@@ -131,62 +128,14 @@ void openExpenseBox(BuildContext context) {
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2100),
                       );
-                      if (pickedDate != null && pickedDate != selectedDate) {
+                      if (pickedDate != null) {
                         setState(() {
                           selectedDate = pickedDate;
+                          dateController.text = pickedDate.toString().split(' ')[0];
                         });
                       }
                     },
                   ),
-                ),
-              ),
-              // Opções de categoria como RadioListTiles
-              ListTile(
-                title: const Text('Alimentação'),
-                leading: Radio(
-                  value: 'Alimentação',
-                  groupValue: selectedCategory,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCategory = value!;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('Transporte'),
-                leading: Radio(
-                  value: 'Transporte',
-                  groupValue: selectedCategory,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCategory = value!;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('Lazer'),
-                leading: Radio(
-                  value: 'Lazer',
-                  groupValue: selectedCategory,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCategory = value!;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('Saúde'),
-                leading: Radio(
-                  value: 'Saúde',
-                  groupValue: selectedCategory,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCategory = value!;
-                    });
-                  },
                 ),
               ),
             ],
@@ -197,45 +146,31 @@ void openExpenseBox(BuildContext context) {
   );
 }
 
-class Category {
-  final String nameCategory;
-  final double valueCategory;
-  Category({required this.nameCategory, required this.valueCategory});
-}
+class ExpenseItem extends StatelessWidget {
+  final String category;
 
-class ExpenseList extends StatelessWidget {
-  final List<Category> categories;
-
-  ExpenseList({required this.categories});
+  const ExpenseItem({required this.category});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: categories.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: _getIcon(categories[index].nameCategory),
-          title: Text(categories[index].nameCategory),
-          subtitle:
-              Text('R\$ ${categories[index].valueCategory.toStringAsFixed(2)}'),
-        );
-      },
+    return GestureDetector(
+      onTap: () => openExpenseBox(context),
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              category,
+              style: TextStyle(fontSize: 18.0),
+            ),
+            Icon(Icons.arrow_forward_ios),
+          ],
+        ),
+      ),
     );
-  }
-
-  // Método para obter o ícone com base na categoria da despesa
-  Icon _getIcon(String category) {
-    switch (category) {
-      case 'Alimentação':
-        return Icon(Icons.fastfood);
-      case 'Transporte':
-        return Icon(Icons.directions_car);
-      case 'Lazer':
-        return Icon(Icons.local_activity);
-      case 'Saúde':
-        return Icon(Icons.local_hospital);
-      default:
-        return Icon(Icons.category);
-    }
   }
 }
