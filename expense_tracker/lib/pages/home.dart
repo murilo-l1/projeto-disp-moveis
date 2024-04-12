@@ -245,6 +245,7 @@ Icon getCategoryIcon(String category) {
 }
 
 // esse método cria a barra de navegação inferior, usado para navegar entre telas (Home e Histórico)
+// a animação entre troca de telas pode ser mais fluida e manter a aba atual selecionada
 BottomNavigationBar buildBottomNavigationBar(BuildContext context) {
   return BottomNavigationBar(
     backgroundColor: const Color.fromARGB(255, 161, 206, 227),
@@ -275,6 +276,7 @@ BottomNavigationBar buildBottomNavigationBar(BuildContext context) {
 }
 
 // gráfico de pizza das despesas
+// isso daqui eventualmente tem que estar em outro lugar e procurar arrumar a posicao da legenda
 class _PieChart extends StatelessWidget {
    _PieChart();
 
@@ -320,13 +322,13 @@ class _PieChart extends StatelessWidget {
             ],
           ),
         ),
-        // Legend
+        // Legendas
         Positioned(
           left: 20,
           top: 0,
           bottom: 10,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Legend items
@@ -342,7 +344,7 @@ class _PieChart extends StatelessWidget {
   }
 }
 
-// Widget for Legend Item
+// Selecao das legendas que vao ficar do lado do grafico, essa é a box delas
 class LegendItem extends StatelessWidget {
   final Color color;
   final String title;
