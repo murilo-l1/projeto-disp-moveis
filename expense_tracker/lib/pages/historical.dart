@@ -13,3 +13,7 @@ class HistoricalPage extends StatelessWidget {
     );
   }
 }
+
+//criar um grafico de barras com 12 barras, uma para cada mes do ano
+
+//criar um historico scrollavel com apenas um item por hora como exemplo
