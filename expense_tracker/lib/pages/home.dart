@@ -1,10 +1,11 @@
-import 'dart:js';
+//import 'dart:js';
 import 'package:expense_tracker/pages/historical.dart';
+import 'package:expense_tracker/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,8 @@ class HomePage extends StatelessWidget {
       appBar: buildAppBar(context),
       // alterar Padding para ajustar a distancia depois que eu colocar o grafico!
       body: Padding(
-        padding: const EdgeInsets.only(top: 500, bottom: 20), // Ajuste a quantidade conforme necessário
+        padding: const EdgeInsets.only(
+            top: 500, bottom: 20), // Ajuste a quantidade conforme necessário
         child: ListView(
           shrinkWrap: true,
           children: [
@@ -47,15 +49,15 @@ AppBar buildAppBar(BuildContext context) {
       child: Container(
         margin: const EdgeInsets.all(18),
         alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: const Color(0xffF7F8F8),
+            borderRadius: BorderRadius.circular(10)),
         // usando um asset que importamos para ser o icone dessa parte da appBar
         child: SvgPicture.asset(
           'assets/icons/dark-theme.svg',
           height: 25,
           width: 25,
         ),
-        decoration: BoxDecoration(
-            color: const Color(0xffF7F8F8),
-            borderRadius: BorderRadius.circular(10)),
       ),
     ),
     // aqui as acoes sao definidas em formato de lista
@@ -63,6 +65,10 @@ AppBar buildAppBar(BuildContext context) {
       GestureDetector(
         onTap: () {
           // acoes a serem executadas ao clicar no icone de perfil
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ProfilePage()),
+          );
         },
         child: Container(
           margin: const EdgeInsets.all(10),
@@ -86,7 +92,8 @@ void openExpenseBox(BuildContext context) {
   double expenseValue = 0.0;
   DateTime selectedDate = DateTime.now();
 
-  TextEditingController dateController = TextEditingController(text: selectedDate.toString().split(' ')[0]);
+  TextEditingController dateController =
+      TextEditingController(text: selectedDate.toString().split(' ')[0]);
 
   showDialog(
     context: context,
@@ -112,7 +119,8 @@ void openExpenseBox(BuildContext context) {
                   labelText: 'Valor',
                   prefixText: 'R\$ ',
                 ),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 onChanged: (value) {
                   expenseValue = double.tryParse(value) ?? 0.0;
                 },
@@ -124,7 +132,7 @@ void openExpenseBox(BuildContext context) {
                 decoration: InputDecoration(
                   labelText: 'Data',
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.date_range),
+                    icon: const Icon(Icons.date_range),
                     onPressed: () async {
                       final DateTime? pickedDate = await showDatePicker(
                         context: context,
@@ -135,7 +143,8 @@ void openExpenseBox(BuildContext context) {
                       if (pickedDate != null) {
                         setState(() {
                           selectedDate = pickedDate;
-                          dateController.text = pickedDate.toString().split(' ')[0];
+                          dateController.text =
+                              pickedDate.toString().split(' ')[0];
                         });
                       }
                     },
@@ -154,36 +163,36 @@ class ExpenseItem extends StatelessWidget {
   final String category;
   double itemValue = 0.0;
 
-  ExpenseItem({required this.category});
+  ExpenseItem({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => openExpenseBox(context),
       child: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
         ),
         child: Row(
           children: [
             Text(
-              'R\$' + itemValue.toString(),
-              style: TextStyle(fontSize: 18.0),
+              'R\$$itemValue',
+              style: const TextStyle(fontSize: 18.0),
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               children: [
                 getCategoryIcon(category),
-                SizedBox(width: 16.0),
+                const SizedBox(width: 16.0),
                 Text(
                   category,
-                  style: TextStyle(fontSize: 18.0),
+                  style: const TextStyle(fontSize: 18.0),
                 ),
               ],
             ),
-            Spacer(),
-            Icon(Icons.add),
+            const Spacer(),
+            const Icon(Icons.add),
           ],
         ),
       ),
@@ -191,26 +200,25 @@ class ExpenseItem extends StatelessWidget {
   }
 }
 
-
 Icon getCategoryIcon(String category) {
   switch (category) {
     case 'Lazer':
-      return Icon(Icons.star); // Change the icon as per your preference
+      return const Icon(Icons.star); // Change the icon as per your preference
     case 'Saúde':
-      return Icon(Icons.local_hospital);
+      return const Icon(Icons.local_hospital);
     case 'Transporte':
-      return Icon(Icons.directions_car);
+      return const Icon(Icons.directions_car);
     case 'Alimentação':
-      return Icon(Icons.restaurant_menu);
+      return const Icon(Icons.restaurant_menu);
     default:
-      return Icon(Icons.category);
+      return const Icon(Icons.category);
   }
 }
 
 // esse método cria a barra de navegação inferior, usado para navegar entre telas (Home e Histórico)
 BottomNavigationBar buildBottomNavigationBar(BuildContext context) {
   return BottomNavigationBar(
-    backgroundColor: Color.fromARGB(255, 213, 203, 155),
+    backgroundColor: const Color.fromARGB(255, 213, 203, 155),
     items: const <BottomNavigationBarItem>[
       BottomNavigationBarItem(
         icon: Icon(Icons.pie_chart_sharp),
