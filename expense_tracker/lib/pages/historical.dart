@@ -25,6 +25,21 @@ class _HistoricalPageState extends State<HistoricalPage> {
     120.0
   ];
 
+  List<Expense> expenses = [
+    Expense(name: 'Mercado', date: DateTime(2024, 4, 1), amount: 30.0, category: 'Alimentação'),
+    Expense(date: DateTime(2024, 4, 5), amount: 12.0, category: 'Transporte', name: 'Uber'),	
+    Expense(name: 'Restaurante', date: DateTime(2024, 4, 10), amount: 50.0, category: 'Alimentação'),
+    Expense(date: DateTime(2024, 4, 15), amount: 25.0, category: 'Transporte', name: 'Taxi'),
+    Expense(name: 'Roupas', date: DateTime(2024, 4, 20), amount: 80.0, category: 'Vestuário'),
+    Expense(date: DateTime(2024, 4, 25), amount: 40.0, category: 'Transporte', name: 'Ônibus'),
+    Expense(name: 'Cinema', date: DateTime(2024, 4, 28), amount: 35.0, category: 'Lazer'),
+    Expense(date: DateTime(2024, 4, 30), amount: 20.0, category: 'Lazer', name: 'Parque'),
+    Expense(name: 'Viagem', date: DateTime(2024, 4, 30), amount: 200.0, category: 'Lazer'),
+    Expense(date: DateTime(2024, 4, 30), amount: 15.0, category: 'Lazer', name: 'Museu'),
+    Expense(name: 'Livros', date: DateTime(2024, 4, 30), amount: 50.0, category: 'Lazer'),
+    // mais despesas conforme necessário (vai virar banco de dados)
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,19 +48,25 @@ class _HistoricalPageState extends State<HistoricalPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(height: 10),
+          Text(
+            'Gastos Totais: R\$ ${calculateTotalExpenses(monthExpenses).toStringAsFixed(2)}' ,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 20,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
           Padding(
-            padding: const EdgeInsets.only(top: 40.0), // Adjust as needed
+            padding: const EdgeInsets.only(top: 20), // Ajuste conforme necessário
             child: SizedBox(
-              height: 160, // Adjust the height as needed
+              height: 200,
               child: _BarChart(monthExpenses: monthExpenses),
             ),
           ),
-          /* Expanded(
-            child: SingleChildScrollView(
-              child: ExpenseScrollList(),
-            ),
-          ), */
-        ],
+          SizedBox(height: 30),
+          // aqui ficara a lista de historico de gastos
+          buildScrollExpenseList(expenses),
+          ],
       ),
       bottomNavigationBar: buildBottomNavigationBar(context),
     );
@@ -118,56 +139,60 @@ class BarData{
 
 class _BarChart extends StatelessWidget {
   final List monthExpenses;
-  const _BarChart({super.key, required this.monthExpenses});
+  const _BarChart({Key? key, required this.monthExpenses}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     BarData barData = BarData(
-      januaryAmount: monthExpenses[0], 
-      februaryAmout: monthExpenses[1], 
-      marchAmout: monthExpenses[2], 
-      aprilAmount: monthExpenses[3], 
+      januaryAmount: monthExpenses[0],
+      februaryAmout: monthExpenses[1],
+      marchAmout: monthExpenses[2],
+      aprilAmount: monthExpenses[3],
       mayAmount: monthExpenses[4],
       juneAmount: monthExpenses[5],
-      julyAmount:  monthExpenses[6],
+      julyAmount: monthExpenses[6],
       augustAmount: monthExpenses[7],
-       septemberAmount: monthExpenses[8],
-       octoberAmount: monthExpenses[9],
-       novemberAmount: monthExpenses[10],
-       decemberAmount: monthExpenses[11],
-       );
-      barData.initializeBarData();
+      septemberAmount: monthExpenses[8],
+      octoberAmount: monthExpenses[9],
+      novemberAmount: monthExpenses[10],
+      decemberAmount: monthExpenses[11],
+    );
+    barData.initializeBarData();
 
-    return BarChart(
-      BarChartData(
-        maxY: 100,
-        minY: 0,
-        gridData: FlGridData(show: false),
-        borderData: FlBorderData(show: false),
-        titlesData: FlTitlesData(
-          show: true,
-          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          // aqui a gente vai chamar a função que muda as coisas de numeros para meses
-          bottomTitles: AxisTitles(sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: getBottomTitles,
-          ))
+    return Container(
+      height: 250, 
+      child: BarChart(
+        BarChartData(
+          maxY: 100,
+          minY: 0,
+          gridData: FlGridData(show: false),
+          borderData: FlBorderData(show: false),
+          titlesData: FlTitlesData(
+            show: true,
+            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                getTitlesWidget: getBottomTitles,
+              ),
+            ),
           ),
-        barGroups: barData.barData.
-        map(
-          (data) => BarChartGroupData(
-          x: data.x,
-          barRods: [
-            BarChartRodData(
-              toY: data.y,
-              color: Colors.grey[700],
-              width: 18,
-              borderRadius: BorderRadius.circular(4),
-              )
-          ],
-        )).toList(),
+          barGroups: barData.barData.map(
+            (data) => BarChartGroupData(
+              x: data.x,
+              barRods: [
+                BarChartRodData(
+                  toY: data.y,
+                  color: Colors.grey[700],
+                  width: 18,
+                  borderRadius: BorderRadius.circular(4),
+                )
+              ],
+            ),
+          ).toList(),
+        ),
       ),
     );
   }
@@ -228,36 +253,68 @@ Widget getBottomTitles(double value, TitleMeta meta){
 
 }
 
-//criar um historico scrollavel com apenas um item por hora como exemplo
-
-//criar um historico scrollavel com apenas um item por hora como exemplo
-
-class ExpenseScrollList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // Example list of expenses
-    List<String> expenses = [
-      'Expense 1',
-      'Expense 2',
-      'Expense 3',
-      'Expense 4',
-      'Expense 5',
-      'Expense 6',
-      'Expense 7',
-      'Expense 8',
-      'Expense 9',
-      'Expense 10',
-    ];
-
-    return Expanded(
-      child: ListView.builder(
-        itemCount: expenses.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            title: Text(expenses[index]),
-          );
-        },
-      ),
-    );
+double calculateTotalExpenses(List<double> monthExpenses){
+  double total = 0;
+  for (int i = 0; i < monthExpenses.length; i++){
+    total += monthExpenses[i];
   }
+  return total;
+}
+
+// classe usada para salvar os gastos que serão apresentados na lista de histórico
+class Expense {
+  final String name;
+  final DateTime date;
+  final double amount;
+  final String category;
+
+  Expense({required this.name, required this.date, required this.amount, required this.category});
+}
+
+//criar um historico scrollavel com apenas itens arbitrarios para teste
+Widget buildScrollExpenseList(List<Expense> expenses) {
+  return Expanded(
+    child: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Lista de gastos
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: expenses.length, 
+            itemBuilder: (BuildContext context, int index) { 
+              return ListTile(
+                title: Text(
+                  expenses[index].name,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: const Color.fromARGB(255, 56, 55, 55)
+                  ),
+                  textAlign: TextAlign.start, // Centraliza o texto horizontalmente
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'R\$ ${expenses[index].amount.toStringAsFixed(2)}',
+                    ),
+                    Text(
+                      expenses[index].category,
+                    ),
+                  ],
+                ),
+                trailing: Text(
+                  '${expenses[index].date.day}/${expenses[index].date.month}/${expenses[index].date.year}',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: const Color.fromARGB(255, 56, 55, 55)
+                  ),
+                ),
+              );
+            },
+          )
+        ],
+      ),
+    ),
+  );
 }

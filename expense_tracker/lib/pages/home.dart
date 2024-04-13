@@ -1,4 +1,5 @@
 import 'package:expense_tracker/pages/historical.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -232,7 +233,7 @@ class ExpenseItem extends StatelessWidget {
 Icon getCategoryIcon(String category) {
   switch (category) {
     case 'Lazer':
-      return Icon(Icons.star);
+      return Icon(CupertinoIcons.gamecontroller_fill);
     case 'Saúde':
       return Icon(Icons.local_hospital);
     case 'Transporte':
@@ -255,7 +256,7 @@ BottomNavigationBar buildBottomNavigationBar(BuildContext context) {
         label: 'Home',
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.history),
+        icon: Icon(CupertinoIcons.chart_bar_fill),
         label: 'Gastos Anteriores',
       ),
     ],
@@ -298,26 +299,27 @@ class _PieChart extends StatelessWidget {
               // saúde
               PieChartSectionData(
                 value: 20, // esses valores serao mudados pela soma total na parte 2
-                color: Colors.red,
-                titlePositionPercentageOffset: 1.5
+                color: Color.fromARGB(255, 164, 76, 76),
+                //radius: BorderSide.strokeAlignInside
+
                ),
               // lazer
               PieChartSectionData(
                 value: 20,
-                color: Colors.yellow,
-                titlePositionPercentageOffset: 1.5
+                color: Color.fromARGB(255, 212, 151, 85),
+                
                 ),
               // transporte
               PieChartSectionData(
                 value: 15,
-                color: Colors.blue,
-                titlePositionPercentageOffset: 1.5
+                color: Color.fromARGB(255, 19, 108, 181),
+                
               ),
               // alimentação
               PieChartSectionData(
                 value: 20,
-                color: Colors.green,
-                titlePositionPercentageOffset: 1.5
+                color: Color.fromARGB(255, 109, 192, 114),
+                
                 ),
             ],
           ),
@@ -332,10 +334,10 @@ class _PieChart extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Legend items
-              LegendItem(color: Colors.red, title: 'Saúde'),
-              LegendItem(color: Colors.yellow, title: 'Lazer'),
-              LegendItem(color: Colors.blue, title: 'Transporte'),
-              LegendItem(color: Colors.green, title: 'Alimentação'),
+              LegendItem(color: Color.fromARGB(255, 164, 76, 76), title: 'Saúde'),
+              LegendItem(color: Color.fromARGB(255, 212, 151, 85), title: 'Lazer'),
+              LegendItem(color: Color.fromARGB(255, 19, 108, 181), title: 'Transporte'),
+              LegendItem(color: Color.fromARGB(255, 109, 192, 114), title: 'Alimentação'),
             ],
           ),
         ),
