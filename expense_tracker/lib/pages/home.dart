@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:expense_tracker/charts/pie_chart.dart';
+import 'package:expense_tracker/pages/profile/Profile.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -63,8 +64,12 @@ AppBar buildAppBar(BuildContext context) {
     // definindo um detector de acoes ocorridas dentro da AppBar com suporte para adicao de metodos em cada interacao com um componente
     actions: [
       GestureDetector(
-        onTap: () {
-        },
+        onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileScreen(),
+                ),
+              ),
         child: Container(
           margin: const EdgeInsets.all(10),
           alignment: Alignment.center,
