@@ -1,4 +1,6 @@
+import 'package:expense_tracker/models/enums.dart';
 import 'package:expense_tracker/pages/home.dart';
+import 'package:expense_tracker/pages/profile/components/customBottomBar.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -43,6 +45,7 @@ class _HistoricalPageState extends State<HistoricalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     backgroundColor: Colors.grey[200],
       appBar: buildAppBar(context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,7 +71,9 @@ class _HistoricalPageState extends State<HistoricalPage> {
           buildScrollExpenseList(expenses),
           ],
       ),
-      bottomNavigationBar: buildBottomNavigationBar(context),
+      bottomNavigationBar: customBottomBarNav(
+        selectedMenu: MenuState.bar_chart,
+      ),
     );
   }
 }
@@ -185,7 +190,7 @@ class _BarChart extends StatelessWidget {
               barRods: [
                 BarChartRodData(
                   toY: data.y,
-                  color: Colors.grey[700],
+                  color: Colors.blue[500],
                   width: 18,
                   borderRadius: BorderRadius.circular(4),
                 )

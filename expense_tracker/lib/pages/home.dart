@@ -1,12 +1,10 @@
-import 'package:expense_tracker/pages/historical.dart';
+import 'package:expense_tracker/models/enums.dart';
 import 'package:expense_tracker/pages/profile/Profile.dart';
+import 'package:expense_tracker/pages/profile/components/customBottomBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:expense_tracker/charts/pie_chart.dart';
-import 'package:expense_tracker/pages/profile/Profile.dart';
-
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -14,6 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: buildAppBar(context),
       body: Stack(
         children: [
@@ -45,7 +44,9 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: buildBottomNavigationBar(context),
+      bottomNavigationBar: customBottomBarNav(
+        selectedMenu: MenuState.pie_chart,
+      ),
     );
   }
 }
@@ -58,7 +59,7 @@ AppBar buildAppBar(BuildContext context) {
       style: TextStyle(
           color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
     ),
-    backgroundColor: const Color.fromARGB(255, 33, 58, 69),
+    backgroundColor: Color.fromARGB(255, 2, 151, 162),
     elevation: 0.0,
     centerTitle: true,
     // definindo um detector de acoes ocorridas dentro da AppBar com suporte para adicao de metodos em cada interacao com um componente
@@ -237,36 +238,6 @@ Icon getCategoryIcon(String category) {
   }
 }
 
-// esse método cria a barra de navegação inferior, usado para navegar entre telas (Home e Histórico)
-// a animação entre troca de telas pode ser mais fluida e manter a aba atual selecionada
-BottomNavigationBar buildBottomNavigationBar(BuildContext context) {
-  return BottomNavigationBar(
-    backgroundColor: const Color.fromARGB(255, 33, 58, 69),
-    items: const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
-        icon: Icon(Icons.pie_chart_sharp),
-        label: 'Home',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.chart_bar_fill),
-        label: 'Gastos Anteriores',
-      ),
-    ],
-    onTap: (int index) {
-      if (index == 0) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
-        );
-      } else if (index == 1) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const HistoricalPage()),
-        );
-      }
-    },
-  );
-}
 // gráfico de pizza das despesas
 // isso daqui eventualmente tem que estar em outro lugar e procurar arrumar a posicao da legenda
 class _PieChart extends StatelessWidget {
@@ -294,26 +265,26 @@ class _PieChart extends StatelessWidget {
               PieChartSectionData(
                 value: 20, // esses valores serao mudados pela soma total na parte 2
                 color: Color.fromARGB(255, 164, 76, 76),
-                //radius: BorderSide.strokeAlignInside
+                radius: 80,
 
                ),
               // lazer
               PieChartSectionData(
                 value: 20,
                 color: Color.fromARGB(255, 212, 151, 85),
-                
+                radius: 80,
                 ),
               // transporte
               PieChartSectionData(
                 value: 15,
                 color: Color.fromARGB(255, 19, 108, 181),
-                
+                radius: 80,
               ),
               // alimentação
               PieChartSectionData(
                 value: 20,
                 color: Color.fromARGB(255, 109, 192, 114),
-                
+                radius: 80,
                 ),
             ],
           ),
