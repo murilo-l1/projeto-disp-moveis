@@ -1,4 +1,5 @@
 import 'package:expense_tracker/pages/historical.dart';
+import 'package:expense_tracker/pages/profile/Profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,7 +8,7 @@ import 'package:expense_tracker/charts/pie_chart.dart';
 
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,6 @@ AppBar buildAppBar(BuildContext context) {
     actions: [
       GestureDetector(
         onTap: () {
-          //print('Profile');
         },
         child: Container(
           margin: const EdgeInsets.all(10),
@@ -88,7 +88,8 @@ void openExpenseBox(BuildContext context) {
   double expenseValue = 0.0;
   DateTime selectedDate = DateTime.now();
 
-  TextEditingController dateController = TextEditingController(text: selectedDate.toString().split(' ')[0]);
+  TextEditingController dateController =
+      TextEditingController(text: selectedDate.toString().split(' ')[0]);
 
   showDialog(
     context: context,
@@ -114,7 +115,8 @@ void openExpenseBox(BuildContext context) {
                   labelText: 'Valor',
                   prefixText: 'R\$ ',
                 ),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 onChanged: (value) {
                   expenseValue = double.tryParse(value) ?? 0.0;
                 },
@@ -126,7 +128,7 @@ void openExpenseBox(BuildContext context) {
                 decoration: InputDecoration(
                   labelText: 'Data',
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.date_range),
+                    icon: const Icon(Icons.date_range),
                     onPressed: () async {
                       final DateTime? pickedDate = await showDatePicker(
                         context: context,
@@ -137,7 +139,8 @@ void openExpenseBox(BuildContext context) {
                       if (pickedDate != null) {
                         setState(() {
                           selectedDate = pickedDate;
-                          dateController.text = pickedDate.toString().split(' ')[0];
+                          dateController.text =
+                              pickedDate.toString().split(' ')[0];
                         });
                       }
                     },
@@ -174,14 +177,14 @@ class ExpenseItem extends StatelessWidget {
   final String category;
   double itemValue = 0.0;
 
-  ExpenseItem({required this.category});
+  ExpenseItem({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => openExpenseBox(context),
       child: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           border: Border(
              bottom: BorderSide(color: Color.fromARGB(255, 81, 83, 81),
@@ -191,22 +194,22 @@ class ExpenseItem extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              'R\$' + itemValue.toString(),
-              style: TextStyle(fontSize: 18.0),
+              'R\$$itemValue',
+              style: const TextStyle(fontSize: 18.0),
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               children: [
                 getCategoryIcon(category),
-                SizedBox(width: 16.0),
+                const SizedBox(width: 16.0),
                 Text(
                   category,
-                  style: TextStyle(fontSize: 18.0),
+                  style: const TextStyle(fontSize: 18.0),
                 ),
               ],
             ),
-            Spacer(),
-            Icon(Icons.add),
+            const Spacer(),
+            const Icon(Icons.add),
           ],
         ),
       ),
@@ -219,13 +222,13 @@ Icon getCategoryIcon(String category) {
     case 'Lazer':
       return Icon(CupertinoIcons.gamecontroller_fill);
     case 'Saúde':
-      return Icon(Icons.local_hospital);
+      return const Icon(Icons.local_hospital);
     case 'Transporte':
-      return Icon(Icons.directions_car);
+      return const Icon(Icons.directions_car);
     case 'Alimentação':
-      return Icon(Icons.restaurant_menu);
+      return const Icon(Icons.restaurant_menu);
     default:
-      return Icon(Icons.category);
+      return const Icon(Icons.category);
   }
 }
 
@@ -248,18 +251,17 @@ BottomNavigationBar buildBottomNavigationBar(BuildContext context) {
       if (index == 0) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => const HomePage()),
         );
       } else if (index == 1) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HistoricalPage()),
+          MaterialPageRoute(builder: (context) => const HistoricalPage()),
         );
       }
     },
   );
 }
-
 // gráfico de pizza das despesas
 // isso daqui eventualmente tem que estar em outro lugar e procurar arrumar a posicao da legenda
 class _PieChart extends StatelessWidget {
