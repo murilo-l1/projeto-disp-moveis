@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:expense_tracker/models/enums.dart';
 import 'package:expense_tracker/pages/home.dart';
 import 'package:expense_tracker/pages/profile/components/customBottomBar.dart';
@@ -172,6 +174,7 @@ class _BarChart extends StatelessWidget {
           minY: 0,
           gridData: FlGridData(show: false),
           borderData: FlBorderData(show: false),
+          barTouchData: BarTouchData(enabled: false),
           titlesData: FlTitlesData(
             show: true,
             topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -191,8 +194,8 @@ class _BarChart extends StatelessWidget {
                 BarChartRodData(
                   toY: data.y,
                   color: Colors.blue[500],
-                  width: 18,
-                  borderRadius: BorderRadius.circular(4),
+                  width: 20,
+                  borderRadius: BorderRadius.circular(6),
                 )
               ],
             ),
@@ -206,9 +209,8 @@ class _BarChart extends StatelessWidget {
 Widget getBottomTitles(double value, TitleMeta meta){
 
   const style = TextStyle(
-    color: Colors.grey,
     fontWeight: FontWeight.bold,
-    fontSize: 14,
+    fontSize: 10,
   );
 
   Widget text;
@@ -289,8 +291,7 @@ Widget buildScrollExpenseList(List<Expense> expenses) {
             itemCount: expenses.length, 
             itemBuilder: (BuildContext context, int index) { 
               return ListTile(
-                tileColor: Colors.grey[200],
-                title: Text(
+                  title: Text(
                   expenses[index].name,
                   style: TextStyle(
                     fontSize: 20,
