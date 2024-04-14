@@ -56,29 +56,10 @@ AppBar buildAppBar(BuildContext context) {
       style: TextStyle(
           color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
     ),
-    backgroundColor: const Color.fromARGB(255, 161, 206, 227),
+    backgroundColor: const Color.fromARGB(255, 33, 58, 69),
     elevation: 0.0,
     centerTitle: true,
     // definindo um detector de acoes ocorridas dentro da AppBar com suporte para adicao de metodos em cada interacao com um componente
-    leading: GestureDetector(
-      onTap: () {
-        print('Switch Theme');
-        // logica para trocar o tema do app vem aqui
-        },
-      child: Container(
-        margin: const EdgeInsets.all(18),
-        alignment: Alignment.center,
-        // usando um asset que importamos para ser o icone dessa parte da appBar
-        child: SvgPicture.asset(
-          'assets/icons/dark-theme.svg',
-          height: 25,
-          width: 25,
-        ),
-        decoration: BoxDecoration(
-            color: const Color(0xffF7F8F8),
-            borderRadius: BorderRadius.circular(10)),
-      ),
-    ),
     actions: [
       GestureDetector(
         onTap: () {
@@ -202,7 +183,10 @@ class ExpenseItem extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+          border: Border(
+             bottom: BorderSide(color: Color.fromARGB(255, 81, 83, 81),
+            ), 
+          ),
         ),
         child: Row(
           children: [
@@ -249,7 +233,7 @@ Icon getCategoryIcon(String category) {
 // a animação entre troca de telas pode ser mais fluida e manter a aba atual selecionada
 BottomNavigationBar buildBottomNavigationBar(BuildContext context) {
   return BottomNavigationBar(
-    backgroundColor: const Color.fromARGB(255, 161, 206, 227),
+    backgroundColor: const Color.fromARGB(255, 33, 58, 69),
     items: const <BottomNavigationBarItem>[
       BottomNavigationBarItem(
         icon: Icon(Icons.pie_chart_sharp),
@@ -288,7 +272,10 @@ class _PieChart extends StatelessWidget {
       children: [
         Text(
           'Despesas',
-          style: TextStyle(fontSize: 18.0),
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            ),
         ),
         // Pie Chart
         PieChart(
@@ -363,7 +350,7 @@ class LegendItem extends StatelessWidget {
           height: 25,
           color: color,
         ),
-        SizedBox(width: 4),
+        SizedBox(width: 3),
         Text(title),
       ],
     );

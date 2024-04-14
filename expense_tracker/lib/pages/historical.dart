@@ -63,7 +63,7 @@ class _HistoricalPageState extends State<HistoricalPage> {
               child: _BarChart(monthExpenses: monthExpenses),
             ),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 50),
           // aqui ficara a lista de historico de gastos
           buildScrollExpenseList(expenses),
           ],
@@ -284,11 +284,12 @@ Widget buildScrollExpenseList(List<Expense> expenses) {
             itemCount: expenses.length, 
             itemBuilder: (BuildContext context, int index) { 
               return ListTile(
+                tileColor: Colors.grey[200],
                 title: Text(
                   expenses[index].name,
                   style: TextStyle(
                     fontSize: 20,
-                    color: const Color.fromARGB(255, 56, 55, 55)
+                    color: const Color.fromARGB(255, 56, 55, 55),
                   ),
                   textAlign: TextAlign.start, // Centraliza o texto horizontalmente
                 ),
