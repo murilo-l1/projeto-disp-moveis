@@ -72,11 +72,12 @@ AppBar buildAppBar(BuildContext context) {
           margin: const EdgeInsets.all(10),
           alignment: Alignment.center,
           width: 37,
-          child: SvgPicture.asset(
-            'assets/icons/profile.svg',
-            height: 30,
-            width: 30,
-          ),
+
+          child: CircleAvatar(
+                backgroundImage: const AssetImage(
+                  "assets/images/profilePicture.jpg"), // Replace with your asset path
+              ),
+         
         ),
       ),
     ],

@@ -102,7 +102,7 @@ class BarData{
 
 class _BarChart extends StatelessWidget {
   final List monthExpenses;
-  const _BarChart({super.key, required this.monthExpenses});
+  const _BarChart({required this.monthExpenses});
 
   @override
   Widget build(BuildContext context) {
