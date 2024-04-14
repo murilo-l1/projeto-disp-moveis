@@ -1,8 +1,11 @@
-//import 'dart:js';
 import 'package:expense_tracker/pages/historical.dart';
 import 'package:expense_tracker/pages/profile/Profile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:expense_tracker/charts/pie_chart.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,19 +14,35 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
-      // alterar Padding para ajustar a distancia depois que eu colocar o grafico!
-      body: Padding(
-        padding: const EdgeInsets.only(
-            top: 500, bottom: 20), // Ajuste a quantidade conforme necessário
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            ExpenseItem(category: 'Alimentação'),
-            ExpenseItem(category: 'Transporte'),
-            ExpenseItem(category: 'Lazer'),
-            ExpenseItem(category: 'Saúde'),
-          ],
-        ),
+      body: Stack(
+        children: [
+          // Pie Chart Widget
+          Positioned(
+            top: 100,
+            right: 0,
+            left: 0,
+            height: 300, // Adjust height as needed
+            child: Container(
+               child: _PieChart(),
+            ),
+          ),
+          // ListView
+          Positioned.fill(
+            top: 500, // Adjust top position to leave space for the pie chart
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0), // Adjust padding as needed
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  ExpenseItem(category: 'Alimentação'),
+                  ExpenseItem(category: 'Transporte'),
+                  ExpenseItem(category: 'Lazer'),
+                  ExpenseItem(category: 'Saúde'),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: buildBottomNavigationBar(context),
     );
@@ -38,38 +57,13 @@ AppBar buildAppBar(BuildContext context) {
       style: TextStyle(
           color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
     ),
-    backgroundColor: const Color.fromARGB(255, 143, 132, 132),
+    backgroundColor: const Color.fromARGB(255, 33, 58, 69),
     elevation: 0.0,
     centerTitle: true,
     // definindo um detector de acoes ocorridas dentro da AppBar com suporte para adicao de metodos em cada interacao com um componente
-    leading: GestureDetector(
-      onTap: () {
-        // switch pro dark mode
-      },
-      child: Container(
-        margin: const EdgeInsets.all(18),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: const Color(0xffF7F8F8),
-            borderRadius: BorderRadius.circular(10)),
-        // usando um asset que importamos para ser o icone dessa parte da appBar
-        child: SvgPicture.asset(
-          'assets/icons/dark-theme.svg',
-          height: 25,
-          width: 25,
-        ),
-      ),
-    ),
-    // aqui as acoes sao definidas em formato de lista
     actions: [
       GestureDetector(
         onTap: () {
-          // acoes a serem executadas ao clicar no icone de perfil
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ProfileScreen()), //profile click
-          );
         },
         child: Container(
           margin: const EdgeInsets.all(10),
@@ -86,7 +80,8 @@ AppBar buildAppBar(BuildContext context) {
   );
 }
 
-// quando o usario for inserir numa nova despesa, ele deve clicar no botao que chama esse metodo
+
+// quando o usario for inserir numa nova despesa, essa funcao sera chamada
 void openExpenseBox(BuildContext context) {
   // Variáveis para armazenar os valores inseridos pelo usuário
   String expenseName = '';
@@ -156,6 +151,24 @@ void openExpenseBox(BuildContext context) {
           );
         },
       ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Fechar o AlertDialog somente, sem salvar infos
+          },
+          child: Text(
+            'Cancelar',
+            style: TextStyle(color: Colors.black54), // Texto mais opaco para o botão cancelar
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            // Lógica para salvar os dados vem aqui posteriormente
+            Navigator.of(context).pop(); 
+          },
+          child: Text('Salvar'),
+        ),
+      ],
     ),
   );
 }
@@ -173,7 +186,10 @@ class ExpenseItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+          border: Border(
+             bottom: BorderSide(color: Color.fromARGB(255, 81, 83, 81),
+            ), 
+          ),
         ),
         child: Row(
           children: [
@@ -204,7 +220,7 @@ class ExpenseItem extends StatelessWidget {
 Icon getCategoryIcon(String category) {
   switch (category) {
     case 'Lazer':
-      return const Icon(Icons.star); // Change the icon as per your preference
+      return Icon(CupertinoIcons.gamecontroller_fill);
     case 'Saúde':
       return const Icon(Icons.local_hospital);
     case 'Transporte':
@@ -217,16 +233,17 @@ Icon getCategoryIcon(String category) {
 }
 
 // esse método cria a barra de navegação inferior, usado para navegar entre telas (Home e Histórico)
+// a animação entre troca de telas pode ser mais fluida e manter a aba atual selecionada
 BottomNavigationBar buildBottomNavigationBar(BuildContext context) {
   return BottomNavigationBar(
-    backgroundColor: const Color.fromARGB(255, 213, 203, 155),
+    backgroundColor: const Color.fromARGB(255, 33, 58, 69),
     items: const <BottomNavigationBarItem>[
       BottomNavigationBarItem(
         icon: Icon(Icons.pie_chart_sharp),
         label: 'Home',
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.history),
+        icon: Icon(CupertinoIcons.chart_bar_fill),
         label: 'Gastos Anteriores',
       ),
     ],
@@ -244,4 +261,100 @@ BottomNavigationBar buildBottomNavigationBar(BuildContext context) {
       }
     },
   );
+}
+// gráfico de pizza das despesas
+// isso daqui eventualmente tem que estar em outro lugar e procurar arrumar a posicao da legenda
+class _PieChart extends StatelessWidget {
+   _PieChart();
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Text(
+          'Despesas',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            ),
+        ),
+        // Pie Chart
+        PieChart(
+          swapAnimationDuration: Duration(milliseconds: 750),
+          swapAnimationCurve: Curves.easeInOut,
+          PieChartData(
+            sections: [
+              // saúde
+              PieChartSectionData(
+                value: 20, // esses valores serao mudados pela soma total na parte 2
+                color: Color.fromARGB(255, 164, 76, 76),
+                //radius: BorderSide.strokeAlignInside
+
+               ),
+              // lazer
+              PieChartSectionData(
+                value: 20,
+                color: Color.fromARGB(255, 212, 151, 85),
+                
+                ),
+              // transporte
+              PieChartSectionData(
+                value: 15,
+                color: Color.fromARGB(255, 19, 108, 181),
+                
+              ),
+              // alimentação
+              PieChartSectionData(
+                value: 20,
+                color: Color.fromARGB(255, 109, 192, 114),
+                
+                ),
+            ],
+          ),
+        ),
+        // Legendas
+        Positioned(
+          left: 20,
+          top: 0,
+          bottom: 10,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Legend items
+              LegendItem(color: Color.fromARGB(255, 164, 76, 76), title: 'Saúde'),
+              LegendItem(color: Color.fromARGB(255, 212, 151, 85), title: 'Lazer'),
+              LegendItem(color: Color.fromARGB(255, 19, 108, 181), title: 'Transporte'),
+              LegendItem(color: Color.fromARGB(255, 109, 192, 114), title: 'Alimentação'),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// Selecao das legendas que vao ficar do lado do grafico, essa é a box delas
+class LegendItem extends StatelessWidget {
+  final Color color;
+  final String title;
+
+  const LegendItem({Key? key, required this.color, required this.title})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 25,
+          height: 25,
+          color: color,
+        ),
+        SizedBox(width: 3),
+        Text(title),
+      ],
+    );
+  }
 }
