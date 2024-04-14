@@ -11,19 +11,187 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        profilePicture(),
+        ProfilePicture(),
         SizedBox(height: 20),
         ProfileMenu(
           icon: LineAwesomeIcons.user,
-          text: 'oi',
-          press: () {},
+          text: 'Editar nome',
+          press: () => openEditNameBox(context),
+          backgroundColor: Colors.blue[100],
+          backgroundOpacity: 0.20,
+        ),
+        ProfileMenu(
+          icon: LineAwesomeIcons.user,
+          text: 'Alterar e-mail',
+          press: () => openEditEmailBox(context),
+          backgroundColor: Colors.blue[100],
+          backgroundOpacity: 0.2,
+        ),
+        ProfileMenu(
+          icon: LineAwesomeIcons.user,
+          text: 'Alterar senha',
+          press: () => openEditPasswordBox(context),
+          backgroundColor: Colors.blue[100],
+          backgroundOpacity: 0.2,
         ),
         ProfileMenu(
           icon: LineAwesomeIcons.user,
           text: 'Logout',
           press: () {},
+          textColor: Colors.red, 
+          backgroundColor: Colors.red[100],
+          backgroundOpacity: 0.5,
         ),
       ],
     );
   }
+}
+
+void openEditNameBox(BuildContext context) {
+  String newName = '';
+
+  TextEditingController nameController = TextEditingController();
+
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Editar Nome'), 
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: nameController, 
+            decoration: const InputDecoration(
+              labelText: 'Nome', 
+            ),
+            onChanged: (value) {
+              newName = value;
+            },
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(
+            'Cancelar',
+            style: TextStyle(color: Colors.black54), 
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            print('New name: $newName'); 
+            Navigator.of(context).pop(); 
+          },
+          child: Text('Salvar'), 
+        ),
+      ],
+    ),
+  );
+}
+
+void openEditEmailBox(BuildContext context) {
+  // Variables to store emails
+  String currentEmail = '';
+  String newEmail = '';
+
+  TextEditingController currentEmailController = TextEditingController();
+  TextEditingController newEmailController = TextEditingController();
+
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Editar Email'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: currentEmailController,
+            decoration: const InputDecoration(
+              labelText: 'Email Atual',
+            ),
+            onChanged: (value) {
+              currentEmail = value;
+            },
+          ),
+          const SizedBox(height: 10.0),
+          TextField(
+            controller: newEmailController,
+            decoration: const InputDecoration(
+              labelText: 'Novo Email',
+            ),
+            onChanged: (value) {
+              newEmail = value;
+            },
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text('Cancelar'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Close edit email dialog
+          },
+          child: Text('Salvar'),
+        ),
+      ],
+    ),
+  );
+}
+
+void openEditPasswordBox(BuildContext context) {
+  // Variables to store passwords
+  String currentPassword = '';
+  String newPassword = '';
+
+  TextEditingController currentPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Editar Senha'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: currentPasswordController,
+            obscureText: true, // Hide current password input
+            decoration: const InputDecoration(
+              labelText: 'Senha Atual',
+            ),
+            onChanged: (value) {
+              currentPassword = value;
+            },
+          ),
+          const SizedBox(height: 10.0),
+          TextField(
+            controller: newPasswordController,
+            obscureText: true, // Hide new password input
+            decoration: const InputDecoration(
+              labelText: 'Nova Senha',
+            ),
+            onChanged: (value) {
+              newPassword = value;
+            },
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text('Cancelar'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Close edit password dialog
+          },
+          child: Text('Salvar'),
+        ),
+      ],
+    ),
+  );
 }
