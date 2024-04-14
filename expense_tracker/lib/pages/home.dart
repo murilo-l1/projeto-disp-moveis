@@ -7,46 +7,42 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: buildAppBar(context),
-      body: Stack(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Pie Chart Widget
-          Positioned(
-            top: 100,
-            right: 0,
-            left: 0,
+          SizedBox(height: 40.0),
+          Container(
             height: 300, // Adjust height as needed
-            child: Container(
-               child: _PieChart(),
-            ),
+            child: _PieChart(),
           ),
+          SizedBox(height: 50.0),
+          // Legend
+          Legend(),
+          SizedBox(height: 80.0),
+          
           // ListView
-          Positioned.fill(
-            top: 500, // Adjust top position to leave space for the pie chart
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0), // Adjust padding as needed
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  ExpenseItem(category: 'Alimentação'),
-                  ExpenseItem(category: 'Transporte'),
-                  ExpenseItem(category: 'Lazer'),
-                  ExpenseItem(category: 'Saúde'),
-                ],
-              ),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              shrinkWrap: true,
+              children: [
+                ExpenseItem(category: 'Alimentação'),
+                ExpenseItem(category: 'Transporte'),
+                ExpenseItem(category: 'Lazer'),
+                ExpenseItem(category: 'Saúde'),
+              ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: customBottomBarNav(
-        selectedMenu: MenuState.pie_chart,
-      ),
+      bottomNavigationBar: customBottomBarNav(selectedMenu: MenuState.pie_chart),
     );
   }
 }
@@ -55,11 +51,12 @@ AppBar buildAppBar(BuildContext context) {
   return AppBar(
     //definicao do titulo e estilizacao dele
     title: const Text(
-      'Expense Tracker',
+      'Gerenciee',
       style: TextStyle(
-          color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+          
+          color: Color.fromARGB(255, 238, 240, 245), fontSize: 22, fontWeight: FontWeight.bold),
     ),
-    backgroundColor: Color.fromARGB(255, 2, 151, 162),
+    backgroundColor: Colors.blue[300],
     elevation: 0.0,
     centerTitle: true,
     // definindo um detector de acoes ocorridas dentro da AppBar com suporte para adicao de metodos em cada interacao com um componente
@@ -77,8 +74,8 @@ AppBar buildAppBar(BuildContext context) {
           width: 37,
           child: SvgPicture.asset(
             'assets/icons/profile.svg',
-            height: 20,
-            width: 20,
+            height: 30,
+            width: 30,
           ),
         ),
       ),
@@ -266,45 +263,65 @@ class _PieChart extends StatelessWidget {
                 value: 20, // esses valores serao mudados pela soma total na parte 2
                 color: Color.fromARGB(255, 164, 76, 76),
                 radius: 80,
-
-               ),
+                borderSide: BorderSide(color: Colors.black, width: 0.5),
+                title: '20%'
+                ),
               // lazer
               PieChartSectionData(
                 value: 20,
                 color: Color.fromARGB(255, 212, 151, 85),
                 radius: 80,
+                borderSide: BorderSide(color: Colors.black, width: 0.5),
+                title: '20%'
                 ),
               // transporte
               PieChartSectionData(
                 value: 15,
                 color: Color.fromARGB(255, 19, 108, 181),
                 radius: 80,
+                borderSide: BorderSide(color: Colors.black, width: 0.5),
+                title: '15%'
               ),
               // alimentação
               PieChartSectionData(
                 value: 20,
                 color: Color.fromARGB(255, 109, 192, 114),
                 radius: 80,
+                borderSide: BorderSide(color: Colors.black, width: 0.5),
+                title: '20%'
                 ),
             ],
           ),
         ),
-        // Legendas
-        Positioned(
-          left: 20,
-          top: 0,
-          bottom: 10,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Legend items
-              LegendItem(color: Color.fromARGB(255, 164, 76, 76), title: 'Saúde'),
-              LegendItem(color: Color.fromARGB(255, 212, 151, 85), title: 'Lazer'),
-              LegendItem(color: Color.fromARGB(255, 19, 108, 181), title: 'Transporte'),
-              LegendItem(color: Color.fromARGB(255, 109, 192, 114), title: 'Alimentação'),
-            ],
-          ),
+        ],
+  );
+  }
+}
+
+class Legend extends StatelessWidget {
+  const Legend({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        // Legend items
+        LegendItem(
+          color: Color.fromARGB(255, 164, 76, 76),
+          title: 'Saúde',
+        ),
+        LegendItem(
+          color: Color.fromARGB(255, 212, 151, 85),
+          title: 'Lazer',
+        ),
+        LegendItem(
+          color: Color.fromARGB(255, 19, 108, 181),
+          title: 'Transporte',
+        ),
+        LegendItem(
+          color: Color.fromARGB(255, 109, 192, 114),
+          title: 'Alimentação',
         ),
       ],
     );
@@ -324,11 +341,11 @@ class LegendItem extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 25,
-          height: 25,
+          width: 30,
+          height: 30,
           color: color,
         ),
-        SizedBox(width: 3),
+        SizedBox(width: 5),
         Text(title),
       ],
     );
