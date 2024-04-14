@@ -53,7 +53,6 @@ AppBar buildAppBar(BuildContext context) {
     title: const Text(
       'Gerenciee',
       style: TextStyle(
-          
           color: Color.fromARGB(255, 238, 240, 245), fontSize: 22, fontWeight: FontWeight.bold),
     ),
     backgroundColor: Colors.blue[300],
@@ -208,7 +207,11 @@ class ExpenseItem extends StatelessWidget {
                 const SizedBox(width: 16.0),
                 Text(
                   category,
-                  style: const TextStyle(fontSize: 18.0),
+                  style: const TextStyle(
+                    //fontFamily: 'assets\fonts\Ubuntu-Regular.ttf',
+                    fontSize: 18.0,
+                    ),
+                  
                 ),
               ],
             ),
