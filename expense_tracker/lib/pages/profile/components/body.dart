@@ -91,7 +91,6 @@ void openEditNameBox(BuildContext context) {
 }
 
 void openEditEmailBox(BuildContext context) {
-  // Variables to store emails
   String currentEmail = '';
   String newEmail = '';
 
@@ -133,7 +132,7 @@ void openEditEmailBox(BuildContext context) {
         ),
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pop(); // Close edit email dialog
+            Navigator.of(context).pop(); 
           },
           child: const Text('Salvar'),
         ),
@@ -143,7 +142,6 @@ void openEditEmailBox(BuildContext context) {
 }
 
 void openEditPasswordBox(BuildContext context) {
-  // Variables to store passwords
   String currentPassword = '';
   String newPassword = '';
 
@@ -159,7 +157,7 @@ void openEditPasswordBox(BuildContext context) {
         children: [
           TextField(
             controller: currentPasswordController,
-            obscureText: true, // Hide current password input
+            obscureText: true, //para esconder
             decoration: const InputDecoration(
               labelText: 'Senha Atual',
             ),
@@ -170,7 +168,7 @@ void openEditPasswordBox(BuildContext context) {
           const SizedBox(height: 10.0),
           TextField(
             controller: newPasswordController,
-            obscureText: true, // Hide new password input
+            obscureText: true, //para esconder
             decoration: const InputDecoration(
               labelText: 'Nova Senha',
             ),
@@ -187,7 +185,7 @@ void openEditPasswordBox(BuildContext context) {
         ),
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pop(); // Close edit password dialog
+            Navigator.of(context).pop();
           },
           child: const Text('Salvar'),
         ),

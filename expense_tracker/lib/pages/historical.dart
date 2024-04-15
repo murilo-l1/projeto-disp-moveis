@@ -47,7 +47,7 @@ class _HistoricalPageState extends State<HistoricalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     backgroundColor: Colors.grey[200],
+      //backgroundColor: Colors.grey[200],
       appBar: buildAppBar(context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,7 +58,7 @@ class _HistoricalPageState extends State<HistoricalPage> {
             textAlign: TextAlign.left,
             style: const TextStyle(
               fontSize: 20,
-              fontStyle: FontStyle.italic,
+              //fontStyle: FontStyle.italic,
             ),
           ),
           Padding(
@@ -66,6 +66,7 @@ class _HistoricalPageState extends State<HistoricalPage> {
             child: SizedBox(
               height: 200,
               child: _BarChart(monthExpenses: monthExpenses),
+              
             ),
           ),
           const SizedBox(height: 50),

@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      //backgroundColor: Colors.grey[200],
       appBar: buildAppBar(context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
