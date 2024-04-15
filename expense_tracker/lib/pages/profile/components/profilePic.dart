@@ -14,8 +14,8 @@ class ProfilePicture extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              CircleAvatar(
-                backgroundImage: const AssetImage(
+              const CircleAvatar(
+                backgroundImage: AssetImage(
                   "assets/images/profilePicture.jpg"), // Replace with your asset path
               ),
               Positioned(
@@ -26,7 +26,7 @@ class ProfilePicture extends StatelessWidget {
                   height: 35,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: Color.fromARGB(255, 100, 205, 212).withOpacity(1.0),
+                    color: const Color.fromARGB(255, 100, 205, 212).withOpacity(1.0),
                   ),
                   child: Icon(
                     LineAwesomeIcons.camera,

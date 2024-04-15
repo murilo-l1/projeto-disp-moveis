@@ -5,14 +5,14 @@ import 'profileMenu.dart';
 import 'profilePic.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  const Body({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ProfilePicture(),
-        SizedBox(height: 20),
+        const ProfilePicture(),
+        const SizedBox(height: 20),
         ProfileMenu(
           icon: LineAwesomeIcons.user,
           text: 'Editar nome',
@@ -73,7 +73,7 @@ void openEditNameBox(BuildContext context) {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(
+          child: const Text(
             'Cancelar',
             style: TextStyle(color: Colors.black54), 
           ),
@@ -83,7 +83,7 @@ void openEditNameBox(BuildContext context) {
             print('New name: $newName'); 
             Navigator.of(context).pop(); 
           },
-          child: Text('Salvar'), 
+          child: const Text('Salvar'), 
         ),
       ],
     ),
@@ -129,13 +129,13 @@ void openEditEmailBox(BuildContext context) {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Cancelar'),
+          child: const Text('Cancelar'),
         ),
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).pop(); // Close edit email dialog
           },
-          child: Text('Salvar'),
+          child: const Text('Salvar'),
         ),
       ],
     ),
@@ -183,13 +183,13 @@ void openEditPasswordBox(BuildContext context) {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Cancelar'),
+          child: const Text('Cancelar'),
         ),
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).pop(); // Close edit password dialog
           },
-          child: Text('Salvar'),
+          child: const Text('Salvar'),
         ),
       ],
     ),

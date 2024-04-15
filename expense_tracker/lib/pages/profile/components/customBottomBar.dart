@@ -15,20 +15,20 @@ class customBottomBarNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color inActiveIconColor = Color(0xFFB6B6B6);
+    final Color inActiveIconColor = const Color(0xFFB6B6B6);
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10), //mudar para 14
+      padding: const EdgeInsets.symmetric(vertical: 10), //mudar para 14
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(40),
           topRight: Radius.circular(40),
         ),
         boxShadow: [
           BoxShadow(
-              offset: Offset(0, -15),
+              offset: const Offset(0, -15),
               blurRadius: 20,
-              color: Color(0xFFDADADA).withOpacity(0.15)),
+              color: const Color(0xFFDADADA).withOpacity(0.15)),
         ],
       ),
       child: SafeArea(
@@ -46,7 +46,7 @@ class customBottomBarNav extends StatelessWidget {
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HomePage(),
+                  builder: (context) => const HomePage(),
                 ),
               ),
             ),
@@ -61,7 +61,7 @@ class customBottomBarNav extends StatelessWidget {
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HistoricalPage(),
+                  builder: (context) => const HistoricalPage(),
                 ),
               ),
             ),

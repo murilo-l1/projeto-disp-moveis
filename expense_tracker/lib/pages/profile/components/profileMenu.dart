@@ -29,9 +29,7 @@ class ProfileMenu extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          backgroundColor: backgroundColor != null
-              ? backgroundColor?.withOpacity(backgroundOpacity ?? 1.0)
-              : null,
+          backgroundColor: backgroundColor?.withOpacity(backgroundOpacity ?? 1.0),
         ),
         onPressed: press,
         child: Row(
@@ -39,9 +37,9 @@ class ProfileMenu extends StatelessWidget {
             Icon(
               icon,
               size: 35,
-              color: Color.fromARGB(255, 0, 188, 201),
+              color: const Color.fromARGB(255, 0, 188, 201),
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             Expanded(
               child: Text(
                 text,
@@ -50,7 +48,7 @@ class ProfileMenu extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(LineAwesomeIcons.angle_right, size: 35, color: Colors.black),
+            const Icon(LineAwesomeIcons.angle_right, size: 35, color: Colors.black),
           ],
         ),
       ),

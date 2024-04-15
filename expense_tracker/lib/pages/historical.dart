@@ -52,11 +52,11 @@ class _HistoricalPageState extends State<HistoricalPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             'Gastos Totais: R\$ ${calculateTotalExpenses(monthExpenses).toStringAsFixed(2)}' ,
             textAlign: TextAlign.left,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontStyle: FontStyle.italic,
             ),
@@ -68,12 +68,12 @@ class _HistoricalPageState extends State<HistoricalPage> {
               child: _BarChart(monthExpenses: monthExpenses),
             ),
           ),
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
           // aqui ficara a lista de historico de gastos
           buildScrollExpenseList(expenses),
           ],
       ),
-      bottomNavigationBar: customBottomBarNav(
+      bottomNavigationBar: const customBottomBarNav(
         selectedMenu: MenuState.bar_chart,
       ),
     );
@@ -146,7 +146,7 @@ class BarData{
 
 class _BarChart extends StatelessWidget {
   final List monthExpenses;
-  const _BarChart({Key? key, required this.monthExpenses}) : super(key: key);
+  const _BarChart({super.key, required this.monthExpenses});
 
   @override
   Widget build(BuildContext context) {
@@ -166,16 +166,16 @@ class _BarChart extends StatelessWidget {
     );
     barData.initializeBarData();
 
-    return Container(
+    return SizedBox(
       height: 250, 
       child: BarChart(
         BarChartData(
           maxY: 100,
           minY: 0,
-          gridData: FlGridData(show: false),
+          gridData: const FlGridData(show: false),
           borderData: FlBorderData(show: false),
           barTouchData: BarTouchData(enabled: false),
-          titlesData: FlTitlesData(
+          titlesData: const FlTitlesData(
             show: true,
             topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
             leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -217,46 +217,46 @@ Widget getBottomTitles(double value, TitleMeta meta){
 
   switch(value.toInt()){
     case 0:
-      text = Text('Jan', style: style);
+      text = const Text('Jan', style: style);
       break;
     case 1:
-      text = Text('Fev', style: style);
+      text = const Text('Fev', style: style);
       break;
     case 2:
-      text = Text('Mar', style: style);
+      text = const Text('Mar', style: style);
       break;
     case 3:
-      text = Text('Abr', style: style);
+      text = const Text('Abr', style: style);
       break;
     case 4:
-      text = Text('Mai', style: style);
+      text = const Text('Mai', style: style);
       break;
     case 5:
-      text = Text('Jun', style: style);
+      text = const Text('Jun', style: style);
       break;
     case 6:
-      text = Text('Jul', style: style);
+      text = const Text('Jul', style: style);
       break;
     case 7:
-      text = Text('Ago', style: style);
+      text = const Text('Ago', style: style);
       break;
     case 8:
-      text = Text('Set', style: style);
+      text = const Text('Set', style: style);
       break;
     case 9: 
-      text = Text('Out', style: style);
+      text = const Text('Out', style: style);
       break;
     case 10:
-      text = Text('Nov', style: style);
+      text = const Text('Nov', style: style);
       break;
     case 11:
-      text = Text('Dez', style: style);
+      text = const Text('Dez', style: style);
       break;
     default:
-      text = Text('', style: style);
+      text = const Text('', style: style);
 }
 
-  return SideTitleWidget(child: text, axisSide: meta.axisSide);
+  return SideTitleWidget(axisSide: meta.axisSide, child: text);
 
 }
 
@@ -293,9 +293,9 @@ Widget buildScrollExpenseList(List<Expense> expenses) {
               return ListTile(
                   title: Text(
                   expenses[index].name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
-                    color: const Color.fromARGB(255, 56, 55, 55),
+                    color: Color.fromARGB(255, 56, 55, 55),
                   ),
                   textAlign: TextAlign.start, // Centraliza o texto horizontalmente
                 ),
@@ -312,9 +312,9 @@ Widget buildScrollExpenseList(List<Expense> expenses) {
                 ),
                 trailing: Text(
                   '${expenses[index].date.day}/${expenses[index].date.month}/${expenses[index].date.year}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15,
-                    color: const Color.fromARGB(255, 56, 55, 55)
+                    color: Color.fromARGB(255, 56, 55, 55)
                   ),
                 ),
               );

@@ -126,9 +126,9 @@ class _BarChart extends StatelessWidget {
       BarChartData(
         maxY: 100,
         minY: 0,
-        gridData: FlGridData(show: false),
+        gridData: const FlGridData(show: false),
         borderData: FlBorderData(show: false),
-        titlesData: FlTitlesData(
+        titlesData: const FlTitlesData(
           show: true,
           topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
           leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -170,45 +170,45 @@ Widget getBottomTitles(double value, TitleMeta meta){
 
   switch(value.toInt()){
     case 0:
-      text = Text('Jan', style: style);
+      text = const Text('Jan', style: style);
       break;
     case 1:
-      text = Text('Fev', style: style);
+      text = const Text('Fev', style: style);
       break;
     case 2:
-      text = Text('Mar', style: style);
+      text = const Text('Mar', style: style);
       break;
     case 3:
-      text = Text('Abr', style: style);
+      text = const Text('Abr', style: style);
       break;
     case 4:
-      text = Text('Mai', style: style);
+      text = const Text('Mai', style: style);
       break;
     case 5:
-      text = Text('Jun', style: style);
+      text = const Text('Jun', style: style);
       break;
     case 6:
-      text = Text('Jul', style: style);
+      text = const Text('Jul', style: style);
       break;
     case 7:
-      text = Text('Ago', style: style);
+      text = const Text('Ago', style: style);
       break;
     case 8:
-      text = Text('Set', style: style);
+      text = const Text('Set', style: style);
       break;
     case 9: 
-      text = Text('Out', style: style);
+      text = const Text('Out', style: style);
       break;
     case 10:
-      text = Text('Nov', style: style);
+      text = const Text('Nov', style: style);
       break;
     case 11:
-      text = Text('Dez', style: style);
+      text = const Text('Dez', style: style);
       break;
     default:
-      text = Text('', style: style);
+      text = const Text('', style: style);
 }
 
-  return SideTitleWidget(child: text, axisSide: meta.axisSide);
+  return SideTitleWidget(axisSide: meta.axisSide, child: text);
 
 }

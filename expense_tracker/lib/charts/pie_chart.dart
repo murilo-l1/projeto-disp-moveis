@@ -3,20 +3,20 @@ import 'package:fl_chart/fl_chart.dart';
 
 // gráfico de pizza das despesas
 class _PieChart extends StatelessWidget {
-   _PieChart();
+   const _PieChart();
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Text(
+        const Text(
           'Despesas',
           style: TextStyle(fontSize: 18.0),
         ),
         // Pie Chart
         PieChart(
-          swapAnimationDuration: Duration(milliseconds: 750),
+          swapAnimationDuration: const Duration(milliseconds: 750),
           swapAnimationCurve: Curves.easeInOut,
           PieChartData(
             sections: [
@@ -48,7 +48,7 @@ class _PieChart extends StatelessWidget {
           ),
         ),
         // Legend
-        Positioned(
+        const Positioned(
           left: 20,
           top: 0,
           bottom: 10,
@@ -74,8 +74,7 @@ class LegendItem extends StatelessWidget {
   final Color color;
   final String title;
 
-  const LegendItem({Key? key, required this.color, required this.title})
-      : super(key: key);
+  const LegendItem({super.key, required this.color, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +85,7 @@ class LegendItem extends StatelessWidget {
           height: 25,
           color: color,
         ),
-        SizedBox(width: 4),
+        const SizedBox(width: 4),
         Text(title),
       ],
     );
