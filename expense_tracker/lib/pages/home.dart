@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +17,15 @@ class HomePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 40.0),
-          Container(
+          const SizedBox(height: 40.0),
+          SizedBox(
             height: 300, // Adjust height as needed
             child: _PieChart(),
           ),
-          SizedBox(height: 50.0),
+          const SizedBox(height: 50.0),
           // Legend
-          Legend(),
-          SizedBox(height: 80.0),
+          const Legend(),
+          const SizedBox(height: 80.0),
           
           // ListView
           Expanded(
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: customBottomBarNav(selectedMenu: MenuState.pie_chart),
+      bottomNavigationBar: const customBottomBarNav(selectedMenu: MenuState.pie_chart),
     );
   }
 }
@@ -53,6 +53,7 @@ AppBar buildAppBar(BuildContext context) {
     title: const Text(
       'Gerenciee',
       style: TextStyle(
+          
           color: Color.fromARGB(255, 238, 240, 245), fontSize: 22, fontWeight: FontWeight.bold),
     ),
     backgroundColor: Colors.blue[300],
@@ -72,8 +73,8 @@ AppBar buildAppBar(BuildContext context) {
           alignment: Alignment.center,
           width: 37,
 
-          child: CircleAvatar(
-                backgroundImage: const AssetImage(
+          child: const CircleAvatar(
+                backgroundImage: AssetImage(
                   "assets/images/profilePicture.jpg"), // Replace with your asset path
               ),
          
@@ -159,7 +160,7 @@ void openExpenseBox(BuildContext context) {
           onPressed: () {
             Navigator.of(context).pop(); // Fechar o AlertDialog somente, sem salvar infos
           },
-          child: Text(
+          child: const Text(
             'Cancelar',
             style: TextStyle(color: Colors.black54), // Texto mais opaco para o botão cancelar
           ),
@@ -169,7 +170,7 @@ void openExpenseBox(BuildContext context) {
             // Lógica para salvar os dados vem aqui posteriormente
             Navigator.of(context).pop(); 
           },
-          child: Text('Salvar'),
+          child: const Text('Salvar'),
         ),
       ],
     ),
@@ -188,7 +189,7 @@ class ExpenseItem extends StatelessWidget {
       onTap: () => openExpenseBox(context),
       child: Container(
         padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border(
              bottom: BorderSide(color: Color.fromARGB(255, 81, 83, 81),
             ), 
@@ -207,11 +208,7 @@ class ExpenseItem extends StatelessWidget {
                 const SizedBox(width: 16.0),
                 Text(
                   category,
-                  style: const TextStyle(
-                    //fontFamily: 'assets\fonts\Ubuntu-Regular.ttf',
-                    fontSize: 18.0,
-                    ),
-                  
+                  style: const TextStyle(fontSize: 18.0),
                 ),
               ],
             ),
@@ -227,7 +224,7 @@ class ExpenseItem extends StatelessWidget {
 Icon getCategoryIcon(String category) {
   switch (category) {
     case 'Lazer':
-      return Icon(CupertinoIcons.gamecontroller_fill);
+      return const Icon(CupertinoIcons.gamecontroller_fill);
     case 'Saúde':
       return const Icon(Icons.local_hospital);
     case 'Transporte':
@@ -242,14 +239,14 @@ Icon getCategoryIcon(String category) {
 // gráfico de pizza das despesas
 // isso daqui eventualmente tem que estar em outro lugar e procurar arrumar a posicao da legenda
 class _PieChart extends StatelessWidget {
-   _PieChart();
+   const _PieChart();
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Text(
+        const Text(
           'Despesas',
           style: TextStyle(
             fontSize: 20.0,
@@ -258,40 +255,40 @@ class _PieChart extends StatelessWidget {
         ),
         // Pie Chart
         PieChart(
-          swapAnimationDuration: Duration(milliseconds: 750),
+          swapAnimationDuration: const Duration(milliseconds: 750),
           swapAnimationCurve: Curves.easeInOut,
           PieChartData(
             sections: [
               // saúde
               PieChartSectionData(
                 value: 20, // esses valores serao mudados pela soma total na parte 2
-                color: Color.fromARGB(255, 164, 76, 76),
+                color: const Color.fromARGB(255, 164, 76, 76),
                 radius: 80,
-                borderSide: BorderSide(color: Colors.black, width: 0.5),
+                borderSide: const BorderSide(color: Colors.black, width: 0.5),
                 title: '20%'
                 ),
               // lazer
               PieChartSectionData(
                 value: 20,
-                color: Color.fromARGB(255, 212, 151, 85),
+                color: const Color.fromARGB(255, 212, 151, 85),
                 radius: 80,
-                borderSide: BorderSide(color: Colors.black, width: 0.5),
+                borderSide: const BorderSide(color: Colors.black, width: 0.5),
                 title: '20%'
                 ),
               // transporte
               PieChartSectionData(
                 value: 15,
-                color: Color.fromARGB(255, 19, 108, 181),
+                color: const Color.fromARGB(255, 19, 108, 181),
                 radius: 80,
-                borderSide: BorderSide(color: Colors.black, width: 0.5),
+                borderSide: const BorderSide(color: Colors.black, width: 0.5),
                 title: '15%'
               ),
               // alimentação
               PieChartSectionData(
                 value: 20,
-                color: Color.fromARGB(255, 109, 192, 114),
+                color: const Color.fromARGB(255, 109, 192, 114),
                 radius: 80,
-                borderSide: BorderSide(color: Colors.black, width: 0.5),
+                borderSide: const BorderSide(color: Colors.black, width: 0.5),
                 title: '20%'
                 ),
             ],
@@ -303,11 +300,11 @@ class _PieChart extends StatelessWidget {
 }
 
 class Legend extends StatelessWidget {
-  const Legend({Key? key}) : super(key: key);
+  const Legend({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         // Legend items
@@ -337,8 +334,7 @@ class LegendItem extends StatelessWidget {
   final Color color;
   final String title;
 
-  const LegendItem({Key? key, required this.color, required this.title})
-      : super(key: key);
+  const LegendItem({super.key, required this.color, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -349,7 +345,7 @@ class LegendItem extends StatelessWidget {
           height: 30,
           color: color,
         ),
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         Text(title),
       ],
     );
