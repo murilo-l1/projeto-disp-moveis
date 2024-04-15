@@ -6,8 +6,8 @@
 
 <h2>Tecnologias utilizadas</h2>
 <ul>
-  <li>Flutter 3.19.5 com a versão 3.3.3 da linguagem Dart [Flutter Docs](https://docs.flutter.dev/release/archive?tab=windows)</li>
-  <li>fl_chart 0.67.0 para disposição de gráficos na tela [fl_chart](https://pub.dev/packages/fl_chart)</li>
+  <li>Flutter 3.19.5 com a versão 3.3.3 da linguagem Dart - https://docs.flutter.dev/release/archive?tab=windows</li>
+  <li>fl_chart 0.67.0 para disposição de gráficos na tela  - https://pub.dev/packages/fl_chart</li>
 </ul>
 
 <h2>Desenvolvimento </h2>
@@ -29,8 +29,7 @@
 
 <h2> Como executar esse aplicativo ? </h2>
 
-<p> Certifique de ter uma máquina que compile aplicações Flutter e um emulador para testes, caso não tenha você pode seguir esse [tutorial](https://fragrant-chanter-261.notion.site/Configura-o-do-Flutter-519beb36ba2a49b3876bb098af556c7a)</p>
-
+Certifique de ter uma máquina que compile aplicações Flutter e um emulador para testes, caso não tenha você pode seguir esse [tutorial](https://fragrant-chanter-261.notion.site/Configura-o-do-Flutter-519beb36ba2a49b3876bb098af556c7a)
 
 ```
 1. Clone o repositório:
