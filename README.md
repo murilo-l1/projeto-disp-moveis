@@ -14,9 +14,9 @@
 
 <h3>Telas </h3>
 <p>
-    1. HomePage: permite a inserção de uma nova despesa distribuída entre 4 categorias, além de exibir um gráfico de pizza que separa esses gastos percentualmente.
-    2. HistoricalPage: armazena os gastos totais do usuário, assim como a disposição das despesas em um gráfico de barras referentes aos meses.
-    3. UserPage: permite alternar entre foto, nome, e-mail e senha cadastrados.
+    1. HomePage: permite a inserção de uma nova despesa distribuída entre 4 categorias, além de exibir um gráfico de pizza que separa esses gastos percentualmente.<br><br>
+    2. HistoricalPage: armazena os gastos totais do usuário, assim como a disposição das despesas em um gráfico de barras referentes aos meses.<br><br>
+    3. UserPage: permite alternar entre foto, nome, e-mail e senha cadastrados.<br><br>
     4. RegisterPage: compreende o processo de registro de uma nova conta no aplicativo.
 </p>
 
