@@ -6,15 +6,18 @@
 
 <h2>Tecnologias utilizadas</h2>
 <ul>
-  <li>Flutter 3.19.5 com a versão 3.3.3 da linguagem Dart <a href="https://docs.flutter.dev/release/archive?tab=windows"</a></li>
-  <li>fl_chart 0.67.0 para disposição de gráficos na tela <a href="https://pub.dev/packages/fl_chart"</a></li> 
+  <li>Flutter 3.19.5 com a versão 3.3.3 da linguagem Dart [Flutter Docs](https://docs.flutter.dev/release/archive?tab=windows)</li>
+  <li>fl_chart 0.67.0 para disposição de gráficos na tela [fl_chart](https://pub.dev/packages/fl_chart)</li>
 </ul>
 
 <h2>Desenvolvimento </h2>
 
 <h3>Telas </h3>
 <p>
-    O projeto consiste de 4 principais telas: HomePage - com a possibilidade de inserção de uma nova despesa distribuída entre 4 categorias, assim como um gráfico de pizza que separa esses gastos percentualmente, 'HistoricalPage' - que armazena os gastos totais do usuário tal qual a disposição das despesas em um gráfico de barras referentes aos meses, 'UserPage' para alternar entre foto, nome, e-mail e senha cadastrados e a 'RegisterPage' que compreende o processo de registro de uma nova conta que vai utilizar o app.  
+    1. HomePage: permite a inserção de uma nova despesa distribuída entre 4 categorias, além de exibir um gráfico de pizza que separa esses gastos percentualmente.
+    2. HistoricalPage: armazena os gastos totais do usuário, assim como a disposição das despesas em um gráfico de barras referentes aos meses.
+    3. UserPage: permite alternar entre foto, nome, e-mail e senha cadastrados.
+    4. RegisterPage: compreende o processo de registro de uma nova conta no aplicativo.
 </p>
 
 <h3>Funcionalidades em produção </h3>
@@ -26,20 +29,20 @@
 
 <h2> Como executar esse aplicativo ? </h2>
 
-```
-1. Certifique de ter uma máquina que compile aplicações Flutter e um emulador para testes, você pode seguir o tutorial abaixo caso não tenha:
-https://fragrant-chanter-261.notion.site/Configura-o-do-Flutter-519beb36ba2a49b3876bb098af556c7a
+<p> Certifique de ter uma máquina que compile aplicações Flutter e um emulador para testes, caso não tenha você pode seguir esse [tutorial](https://fragrant-chanter-261.notion.site/Configura-o-do-Flutter-519beb36ba2a49b3876bb098af556c7a)</p>
 
-2. **Clone o repositório:**
+
+```
+1. Clone o repositório:
 
 git clone https://github.com/murilo-l1/projeto-disp-moveis.git
 
-3. **Atualize as depêndencias e possíveis erros de compatibilidade de sintaxe**
+2. Atualize as depêndencias e possíveis erros de compatibilidade de sintaxe:
 
 flutter pub get
 dart fix --apply
 
-4. **Execute a aplicação**
+3. Execute a aplicação
 
 flutter run
 
