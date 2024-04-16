@@ -6,7 +6,7 @@ class ProfilePicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(  // Change to Column for vertical stacking
+    return Column(  
       children: [
         SizedBox(
           height: 115,
@@ -16,7 +16,7 @@ class ProfilePicture extends StatelessWidget {
             children: [
               const CircleAvatar(
                 backgroundImage: AssetImage(
-                  "assets/images/profilePicture.jpg"), // Replace with your asset path
+                  "assets/images/profilePicture.jpg"),
               ),
               Positioned(
                 bottom: 0,
@@ -38,7 +38,7 @@ class ProfilePicture extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 10), // Add spacing between image and text
+        const SizedBox(height: 10),
         Text(
           "Murilo",
           style: Theme.of(context).textTheme.headlineMedium,

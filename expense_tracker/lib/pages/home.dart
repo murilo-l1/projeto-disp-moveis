@@ -77,7 +77,7 @@ AppBar buildAppBar(BuildContext context) {
 
           child: const CircleAvatar(
                 backgroundImage: AssetImage(
-                  "assets/images/profilePicture.jpg"), // Replace with your asset path
+                  "assets/images/profilePicture.jpg"), 
               ),
          
         ),

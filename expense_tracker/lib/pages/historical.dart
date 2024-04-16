@@ -139,7 +139,7 @@ Widget buildScrollExpenseList(List<Expense> expenses) {
                 ),
               );
             },
-          )
+      )
         ],
       ),
     ),

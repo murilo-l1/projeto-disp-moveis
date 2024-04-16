@@ -10,7 +10,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: SingleChildScrollView( // Wrap the Column with SingleChildScrollView
+      child: SingleChildScrollView( 
         child: Column(
           children: [
             SizedBox(height: 50,),

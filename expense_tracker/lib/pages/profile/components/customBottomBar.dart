@@ -17,7 +17,7 @@ class customBottomBarNav extends StatelessWidget {
   Widget build(BuildContext context) {
     const Color inActiveIconColor = Color(0xFFB6B6B6);
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10), //mudar para 14
+      padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.only(

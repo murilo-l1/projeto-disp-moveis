@@ -15,7 +15,7 @@ class Body extends StatelessWidget{
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding( // Adicione este widget
-        padding: const EdgeInsets.only(top: 40), // Ajuste o valor conforme necessário
+        padding: const EdgeInsets.only(top: 40), // Ajuste o valor 
         child: SizedBox(
           width: double.infinity,
           child: Padding(

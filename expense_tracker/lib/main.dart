@@ -1,4 +1,5 @@
 import 'package:expense_tracker/pages/home.dart';
+import 'package:expense_tracker/pages/login/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: HomePage());
+        debugShowCheckedModeBanner: false, home: LoginPage(),
+    );
   }
 }
