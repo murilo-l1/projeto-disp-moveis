@@ -67,7 +67,7 @@ class BarData{
 
 class BarChartImpl extends StatelessWidget {
   final List monthExpenses;
-  const BarChartImpl({required this.monthExpenses});
+  const BarChartImpl({super.key, required this.monthExpenses});
 
   @override
   Widget build(BuildContext context) {

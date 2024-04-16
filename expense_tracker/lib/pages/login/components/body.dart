@@ -36,7 +36,6 @@ class Body extends StatelessWidget{
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 30,),
-                 // Wrap LoginForm if needed
                 LoginForm(),
                 
                 SizedBox(height: 50,),
@@ -69,22 +68,22 @@ class Body extends StatelessWidget{
                       ),
                     ),
                     GestureDetector(
-  onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const RegistroPage(), // Substitua por sua página de registro
-      ),
-    );
-  },
-  child: Text(
-    " Registre-se.", 
-    style: TextStyle(
-      fontSize: 15,
-      color: const Color.fromARGB(255, 0, 188, 201),
-    ),
-  ),
-)
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegistroPage(), // Substitua por sua página de registro
+                          ),
+                        );
+                      },
+                      child: Text(
+                        " Registre-se.", 
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: const Color.fromARGB(255, 0, 188, 201),
+                        ),
+                      ),
+                    )
                   ],
                 )
               ],

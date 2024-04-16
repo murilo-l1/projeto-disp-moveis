@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:expense_tracker/pages/login/components/log_error.dart';
 import 'body.dart';
-import 'package:expense_tracker/pages/login/components/log.dart';
 
 class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
+
   @override
   _LoginFormState createState() => _LoginFormState();
 }
@@ -23,9 +24,9 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           insertEmail(),
-          SizedBox(height: 25,),
+          const SizedBox(height: 25,),
           insertPassword(),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Error(errors: errors),
           Row(
             children: [
@@ -38,8 +39,8 @@ class _LoginFormState extends State<LoginForm> {
                   });
                 },
               ),
-              Text("Manter login"),
-              Spacer(),
+              const Text("Manter login"),
+              const Spacer(),
               GestureDetector(
   onTap: () {
     Navigator.push(
@@ -49,7 +50,7 @@ class _LoginFormState extends State<LoginForm> {
       ),
     );
   },
-  child: Text(
+  child: const Text(
     "Esqueceu a senha?",
     style: TextStyle(
       decoration: TextDecoration.underline,
@@ -59,7 +60,7 @@ class _LoginFormState extends State<LoginForm> {
             ],
           ),
           buttonLogin(context),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
         ],
       ),
     );
@@ -71,17 +72,17 @@ class _LoginFormState extends State<LoginForm> {
           decoration: InputDecoration(
             labelText: "Senha",
             hintText: "Digite sua senha.",
-            contentPadding: EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
               horizontal: 45,
               vertical: 20,
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22),
-              borderSide: BorderSide(color: Colors.blue),
+              borderSide: const BorderSide(color: Colors.blue),
               gapPadding: 10,
             ),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(right: 20),
+            suffixIcon: const Padding(
+              padding: EdgeInsets.only(right: 20),
               child: Icon(LineAwesomeIcons.lock, size: 30,
               ),
             ),
@@ -101,17 +102,17 @@ class _LoginFormState extends State<LoginForm> {
           decoration: InputDecoration(
             labelText: "Email",
             hintText: "Digite seu email.",
-            contentPadding: EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
               horizontal: 45,
               vertical: 20,
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22),
-              borderSide: BorderSide(color: Colors.blue),
+              borderSide: const BorderSide(color: Colors.blue),
               gapPadding: 10,
             ),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(right: 20),
+            suffixIcon: const Padding(
+              padding: EdgeInsets.only(right: 20),
               child: Icon(LineAwesomeIcons.envelope, size: 30,
               ),
             ),

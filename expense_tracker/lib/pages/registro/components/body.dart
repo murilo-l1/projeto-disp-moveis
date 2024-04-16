@@ -13,25 +13,25 @@ class Body extends StatelessWidget {
       child: SingleChildScrollView( 
         child: Column(
           children: [
-            SizedBox(height: 50,),
-            Text(
+            const SizedBox(height: 50,),
+            const Text(
               'Criar Conta', 
               style: TextStyle(fontSize: 30,
               fontWeight: FontWeight.bold,),
             ),
-            Text(
+            const Text(
                   "Complete os espaços \nou continue com sua rede social",
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
           insertEmail(),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           insertPassword(),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           insertPasswordAgain(),
-          SizedBox(height: 30,),
+          const SizedBox(height: 30,),
           buttonLogin(context),
-          SizedBox(height: 30,),
+          const SizedBox(height: 30,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -61,17 +61,17 @@ class Body extends StatelessWidget {
           decoration: InputDecoration(
             labelText: "Confirmar Senha",
             hintText: "Digite sua senha novamente.",
-            contentPadding: EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
               horizontal: 45,
               vertical: 20,
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22),
-              borderSide: BorderSide(color: Colors.blue),
+              borderSide: const BorderSide(color: Colors.blue),
               gapPadding: 10,
             ),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(right: 20),
+            suffixIcon: const Padding(
+              padding: EdgeInsets.only(right: 20),
               child: Icon(LineAwesomeIcons.lock, size: 30,
               ),
             ),
@@ -85,17 +85,17 @@ class Body extends StatelessWidget {
           decoration: InputDecoration(
             labelText: "Senha",
             hintText: "Digite sua senha.",
-            contentPadding: EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
               horizontal: 45,
               vertical: 20,
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22),
-              borderSide: BorderSide(color: Colors.blue),
+              borderSide: const BorderSide(color: Colors.blue),
               gapPadding: 10,
             ),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(right: 20),
+            suffixIcon: const Padding(
+              padding: EdgeInsets.only(right: 20),
               child: Icon(LineAwesomeIcons.lock, size: 30,
               ),
             ),
@@ -109,17 +109,17 @@ class Body extends StatelessWidget {
           decoration: InputDecoration(
             labelText: "Email",
             hintText: "Digite seu email.",
-            contentPadding: EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
               horizontal: 45,
               vertical: 20,
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22),
-              borderSide: BorderSide(color: Colors.blue),
+              borderSide: const BorderSide(color: Colors.blue),
               gapPadding: 10,
             ),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(right: 20),
+            suffixIcon: const Padding(
+              padding: EdgeInsets.only(right: 20),
               child: Icon(LineAwesomeIcons.envelope, size: 30,
               ),
             ),
@@ -131,7 +131,7 @@ class Body extends StatelessWidget {
 Padding buttonLogin(BuildContext context) {
     return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-    child: Container(
+    child: SizedBox(
       width: 500,
       height: 60,
       child: TextButton(
@@ -145,13 +145,13 @@ Padding buttonLogin(BuildContext context) {
         onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => LoginPage(),
+                    builder: (context) => const LoginPage(),
                   ),
                 ),
-        child: Text(
+        child: const Text(
           'Continuar',
           textAlign: TextAlign.center,
-          style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontSize: 18),
+          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 18),
           
         ),
       ),

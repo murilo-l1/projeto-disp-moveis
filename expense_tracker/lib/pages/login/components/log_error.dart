@@ -19,8 +19,8 @@ class Error extends StatelessWidget {
   Row erroText({required String error}) {
   return Row(
     children: [
-      Icon(LineAwesomeIcons.exclamation_circle, size: 30, color: Colors.red,),
-      SizedBox(width: 10,),
+      const Icon(LineAwesomeIcons.exclamation_circle, size: 30, color: Colors.red,),
+      const SizedBox(width: 10,),
       Text(error),
     ],
   );

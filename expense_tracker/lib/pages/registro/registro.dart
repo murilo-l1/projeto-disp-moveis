@@ -1,4 +1,3 @@
-import 'package:expense_tracker/pages/login/login.dart';
 import 'package:expense_tracker/pages/registro/components/body.dart';
 import 'package:flutter/material.dart';
 
@@ -10,14 +9,14 @@ class RegistroPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true, // Adicione esta linha
-          title: Text(
+          title: const Text(
             'Registrar',
-            style: TextStyle(color: const Color.fromARGB(255, 159, 151, 151), fontSize: 20),
+            style: TextStyle(color: Color.fromARGB(255, 159, 151, 151), fontSize: 20),
           ),
           backgroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: Body(),
+      body: const Body(),
     );
   }
 }
