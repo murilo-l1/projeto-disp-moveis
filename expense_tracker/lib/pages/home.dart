@@ -1,4 +1,5 @@
 import 'package:expense_tracker/models/enums.dart';
+import 'package:expense_tracker/pages/login/login.dart';
 import 'package:expense_tracker/pages/profile/Profile.dart';
 import 'package:expense_tracker/pages/profile/components/customBottomBar.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,7 +66,7 @@ AppBar buildAppBar(BuildContext context) {
         onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProfileScreen(),
+                  builder: (context) => LoginPage(), // agr isso vai pra tela de login importante mudar
                 ),
               ),
         child: Container(
