@@ -1,40 +1,5 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
-/* class _BarChart extends StatefulWidget {
-  const _BarChart({super.key});
-
-  @override
-  State<_BarChart> createState() => _BarChartState();
-} */
-
-/* class _BarChartState extends State<_BarChart>{
-  final List<double> monthExpenses = [
-    10.0,
-    20.0,
-    30.0,
-    40.0,
-    50.0,
-    60.0,
-    70.0,
-    80.0,
-    90.0,
-    10.0,
-    11.0,
-    120.0
-  ];
-  
-  @override
-  Widget build(BuildContext context) {
-    return _BarChart(monthExpenses: expenseList);
-  }
-
-  
-
-
-
-} */
-
+import 'package:fl_chart/fl_chart.dart';
 
 //criar um grafico de barras com 12 barras, uma para cada mes do ano
 class IndividualBar {
@@ -100,59 +65,63 @@ class BarData{
 }
 
 
-class _BarChart extends StatelessWidget {
+class BarChartImpl extends StatelessWidget {
   final List monthExpenses;
-  const _BarChart({required this.monthExpenses});
+  const BarChartImpl({required this.monthExpenses});
 
   @override
   Widget build(BuildContext context) {
     BarData barData = BarData(
-      januaryAmount: monthExpenses[0], 
-      februaryAmout: monthExpenses[1], 
-      marchAmout: monthExpenses[2], 
-      aprilAmount: monthExpenses[3], 
+      januaryAmount: monthExpenses[0],
+      februaryAmout: monthExpenses[1],
+      marchAmout: monthExpenses[2],
+      aprilAmount: monthExpenses[3],
       mayAmount: monthExpenses[4],
       juneAmount: monthExpenses[5],
-      julyAmount:  monthExpenses[6],
+      julyAmount: monthExpenses[6],
       augustAmount: monthExpenses[7],
-       septemberAmount: monthExpenses[8],
-       octoberAmount: monthExpenses[9],
-       novemberAmount: monthExpenses[10],
-       decemberAmount: monthExpenses[11],
-       );
-      barData.initializeBarData();
+      septemberAmount: monthExpenses[8],
+      octoberAmount: monthExpenses[9],
+      novemberAmount: monthExpenses[10],
+      decemberAmount: monthExpenses[11],
+    );
+    barData.initializeBarData();
 
-    return BarChart(
-      BarChartData(
-        maxY: 100,
-        minY: 0,
-        gridData: const FlGridData(show: false),
-        borderData: FlBorderData(show: false),
-        titlesData: const FlTitlesData(
-          show: true,
-          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          // aqui a gente vai chamar a função que muda as coisas de numeros para meses
-          bottomTitles: AxisTitles(sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: getBottomTitles,
+    return SizedBox(
+      height: 250, 
+      child: BarChart(
+        BarChartData(
+          maxY: 100,
+          minY: 0,
+          gridData: const FlGridData(show: false),
+          borderData: FlBorderData(show: false),
+          barTouchData: BarTouchData(enabled: false),
+          titlesData: const FlTitlesData(
+            show: true,
+            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                getTitlesWidget: getBottomTitles,
+              ),
+            ),
           ),
-          ),
-          ),
-        barGroups: barData.barData.
-        map(
-          (data) => BarChartGroupData(
-          x: data.x,
-          barRods: [
-            BarChartRodData(
-              toY: data.y,
-              color: Colors.grey[700],
-              width: 18,
-              borderRadius: BorderRadius.circular(4),
-              )
-          ],
-        )).toList(),
+          barGroups: barData.barData.map(
+            (data) => BarChartGroupData(
+              x: data.x,
+              barRods: [
+                BarChartRodData(
+                  toY: data.y,
+                  color: Colors.blue[500],
+                  width: 20,
+                  borderRadius: BorderRadius.circular(6),
+                )
+              ],
+            ),
+          ).toList(),
+        ),
       ),
     );
   }
@@ -161,9 +130,8 @@ class _BarChart extends StatelessWidget {
 Widget getBottomTitles(double value, TitleMeta meta){
 
   const style = TextStyle(
-    color: Colors.grey,
     fontWeight: FontWeight.bold,
-    fontSize: 14,
+    fontSize: 10,
   );
 
   Widget text;
