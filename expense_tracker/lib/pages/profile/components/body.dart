@@ -1,3 +1,4 @@
+import 'package:expense_tracker/pages/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
@@ -11,8 +12,8 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: 45,),
         const ProfilePicture(),
-        const SizedBox(height: 20),
         ProfileMenu(
           icon: LineAwesomeIcons.user,
           text: 'Editar nome',
@@ -36,8 +37,13 @@ class Body extends StatelessWidget {
         ),
         ProfileMenu(
           icon: LineAwesomeIcons.user,
-          text: 'Logout',
-          press: () {},
+          text: 'Sair',
+          press: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                ),
           textColor: Colors.red, 
           backgroundColor: Colors.red[100],
           backgroundOpacity: 0.5,
