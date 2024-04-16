@@ -12,7 +12,7 @@ class EsqueciSenha extends StatelessWidget {
           centerTitle: true, // Adicione esta linha
           title: Text(
             'Esqueci a senha',
-            style: TextStyle(color: const Color.fromARGB(255, 159, 151, 151), fontSize: 20),
+            style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.black),
