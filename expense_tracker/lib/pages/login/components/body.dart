@@ -36,7 +36,9 @@ class Body extends StatelessWidget{
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 30,),
+                 // Wrap LoginForm if needed
                 LoginForm(),
+                
                 SizedBox(height: 50,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

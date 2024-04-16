@@ -22,21 +22,21 @@ class Body extends StatelessWidget {
           backgroundOpacity: 0.20,
         ),
         ProfileMenu(
-          icon: LineAwesomeIcons.user,
+          icon: LineAwesomeIcons.envelope,
           text: 'Alterar e-mail',
           press: () => openEditEmailBox(context),
           backgroundColor: Colors.blue[100],
           backgroundOpacity: 0.2,
         ),
         ProfileMenu(
-          icon: LineAwesomeIcons.user,
+          icon: LineAwesomeIcons.lock,
           text: 'Alterar senha',
           press: () => openEditPasswordBox(context),
           backgroundColor: Colors.blue[100],
           backgroundOpacity: 0.2,
         ),
         ProfileMenu(
-          icon: LineAwesomeIcons.user,
+          icon: LineAwesomeIcons.door_open,
           text: 'Sair',
           press: () => Navigator.push(
                   context,

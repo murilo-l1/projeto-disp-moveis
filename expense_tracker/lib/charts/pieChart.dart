@@ -43,11 +43,11 @@ class PieChartImpl extends StatelessWidget {
                 ),
               // transporte
               PieChartSectionData(
-                value: 15,
+                value: 40,
                 color: const Color.fromARGB(255, 19, 108, 181),
                 radius: 80,
                 borderSide: const BorderSide(color: Colors.black, width: 0.5),
-                title: '15%'
+                title: '40%'
               ),
               // alimentação
               PieChartSectionData(
