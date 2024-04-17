@@ -10,48 +10,51 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 45,),
-        const ProfilePicture(),
-        ProfileMenu(
-          icon: LineAwesomeIcons.user,
-          text: 'Editar nome',
-          press: () => openEditNameBox(context),
-          backgroundColor: Colors.blue[100],
-          backgroundOpacity: 0.20,
-        ),
-        ProfileMenu(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const SizedBox(height: 45,),
+          const ProfilePicture(),
+          ProfileMenu(
+            icon: LineAwesomeIcons.user,
+            text: 'Editar nome',
+            press: () => openEditNameBox(context),
+            backgroundColor: Colors.blue[100],
+            backgroundOpacity: 0.20,
+          ),
+          ProfileMenu(
           icon: LineAwesomeIcons.envelope,
           text: 'Alterar e-mail',
           press: () => openEditEmailBox(context),
           backgroundColor: Colors.blue[100],
           backgroundOpacity: 0.2,
-        ),
-        ProfileMenu(
-          icon: LineAwesomeIcons.lock,
-          text: 'Alterar senha',
-          press: () => openEditPasswordBox(context),
-          backgroundColor: Colors.blue[100],
-          backgroundOpacity: 0.2,
-        ),
-        ProfileMenu(
-          icon: LineAwesomeIcons.door_open,
-          text: 'Sair',
-          press: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
-                  ),
+          ),
+          ProfileMenu(
+            icon: LineAwesomeIcons.lock,
+            text: 'Alterar senha',
+            press: () => openEditPasswordBox(context),
+            backgroundColor: Colors.blue[100],
+            backgroundOpacity: 0.2,
+          ),
+          ProfileMenu(
+            icon: LineAwesomeIcons.door_open,
+            text: 'Sair',
+            press: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
                 ),
-          textColor: Colors.red, 
-          backgroundColor: Colors.red[100],
-          backgroundOpacity: 0.5,
-        ),
-      ],
+              ),
+            textColor: Colors.red, 
+            backgroundColor: Colors.red[100],
+            backgroundOpacity: 0.5,
+          ),
+        ],
+      ),
     );
   }
 }
+
 
 void openEditNameBox(BuildContext context) {
   String newName = '';

@@ -18,15 +18,18 @@ class HomePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: 40.0),
+          const SizedBox(height: 30.0),
           const SizedBox(
             height: 300, // Adjust height as needed
             child: PieChartImpl(),
           ),
-          const SizedBox(height: 50.0),
+          const SizedBox(height: 30.0),
           // Legend
           const Legend(),
-          const SizedBox(height: 80.0),
+
+          const SizedBox(height: 10.0),
+          Divider(),
+          const SizedBox(height: 5.0),
           
           // ListView
           Expanded(
@@ -55,7 +58,7 @@ AppBar buildAppBar(BuildContext context) {
       'Gerenciee',
       style: TextStyle(
           
-          color: Color.fromARGB(255, 238, 240, 245), fontSize: 22, fontWeight: FontWeight.bold),
+          color: Color.fromARGB(255, 0, 0, 0), fontSize: 22, fontWeight: FontWeight.bold),
     ),
     backgroundColor: Colors.blue[300],
     elevation: 0.0,

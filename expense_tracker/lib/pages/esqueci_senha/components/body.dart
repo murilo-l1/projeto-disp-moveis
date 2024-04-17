@@ -6,62 +6,65 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 class Body extends StatelessWidget {
   const Body({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        children: [
-          const SizedBox(height: 60,),
-          const Text(
-            'Esqueci a Senha', 
-            style: TextStyle(fontSize: 30,
-            fontWeight: FontWeight.bold,),
-          ),
-          const Text(
-            "Porfavor digite seu email e enviaremos \num link para você redefinir sua senha.",
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 60,),
-          const EsqueciSenhaEnvio(),
-          const SizedBox(height: 70,),
-          buttonLogin(context),
-          const SizedBox(height: 200,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Não tem uma conta?", 
+    return SafeArea(
+      child: SingleChildScrollView( // Wrap entire content to allow scrolling
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0), // Adjusted padding
+          child: Column(
+            children: [
+              const SizedBox(height: 60.0), // Consistent spacing
+              const Text(
+                'Esqueci a Senha',
+                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+              ),
+              const Text(
+                "Porfavor digite seu email e enviaremos \num link para você redefinir sua senha.",
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 60.0),
+              const EsqueciSenhaEnvio(),
+              const SizedBox(height: 40.0), // Reduced bottom padding
+              buttonLogin(context),
+              const SizedBox(height: 20.0), // Reduced bottom padding
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Não tem uma conta?",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Color.fromARGB(255, 159, 151, 151),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegistroPage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      " Registre-se.",
                       style: TextStyle(
-                        fontSize: 15,
-                        color: Color.fromARGB(255, 159, 151, 151),
+                        fontSize: 15.0,
+                        color: Color.fromARGB(255, 0, 188, 201),
                       ),
                     ),
-                    GestureDetector(
-  onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const RegistroPage(), // Substitua por sua página de registro
-      ),
-    );
-  },
-  child: const Text(
-    " Registre-se.", 
-    style: TextStyle(
-      fontSize: 15,
-      color: Color.fromARGB(255, 0, 188, 201),
-    ),
-  ),
-)
-                  ],
-                )
-        ],
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
+
 
 class EsqueciSenhaEnvio extends StatefulWidget {
   const EsqueciSenhaEnvio({super.key});
