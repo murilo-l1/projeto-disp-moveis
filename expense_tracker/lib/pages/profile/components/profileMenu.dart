@@ -22,10 +22,10 @@ class ProfileMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
       child: TextButton(
         style: TextButton.styleFrom(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
