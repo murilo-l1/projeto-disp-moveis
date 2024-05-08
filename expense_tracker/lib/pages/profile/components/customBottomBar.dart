@@ -3,7 +3,7 @@ import 'package:expense_tracker/pages/home.dart';
 import 'package:expense_tracker/pages/profile/Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:expense_tracker/models/enums.dart';
+import 'package:expense_tracker/repository/enums.dart';
 
 class customBottomBarNav extends StatelessWidget {
   const customBottomBarNav({

@@ -1,11 +1,9 @@
-import 'package:expense_tracker/models/enums.dart';
+import 'package:expense_tracker/repository/enums.dart';
 import 'package:expense_tracker/pages/profile/Profile.dart';
 import 'package:expense_tracker/pages/profile/components/customBottomBar.dart';
 import 'package:expense_tracker/charts/pieChart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -30,7 +28,7 @@ class HomePage extends StatelessWidget {
           const SizedBox(height: 10.0),
           Divider(),
           const SizedBox(height: 5.0),
-          
+
           // ListView
           Expanded(
             child: ListView(
@@ -46,7 +44,8 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const customBottomBarNav(selectedMenu: MenuState.pie_chart),
+      bottomNavigationBar:
+          const customBottomBarNav(selectedMenu: MenuState.pie_chart),
     );
   }
 }
@@ -57,8 +56,9 @@ AppBar buildAppBar(BuildContext context) {
     title: const Text(
       'Gerenciee',
       style: TextStyle(
-          
-          color: Color.fromARGB(255, 0, 0, 0), fontSize: 22, fontWeight: FontWeight.bold),
+          color: Color.fromARGB(255, 0, 0, 0),
+          fontSize: 22,
+          fontWeight: FontWeight.bold),
     ),
     backgroundColor: Colors.blue[300],
     elevation: 0.0,
@@ -67,27 +67,23 @@ AppBar buildAppBar(BuildContext context) {
     actions: [
       GestureDetector(
         onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ProfileScreen(),
-                ),
-              ),
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ProfileScreen(),
+          ),
+        ),
         child: Container(
           margin: const EdgeInsets.all(10),
           alignment: Alignment.center,
           width: 37,
-
           child: const CircleAvatar(
-                backgroundImage: AssetImage(
-                  "assets/images/profilePicture.jpg"), 
-              ),
-         
+            backgroundImage: AssetImage("assets/images/profilePicture.jpg"),
+          ),
         ),
       ),
     ],
   );
 }
-
 
 // quando o usario for inserir numa nova despesa, essa funcao sera chamada
 void openExpenseBox(BuildContext context) {
@@ -162,17 +158,20 @@ void openExpenseBox(BuildContext context) {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(); // Fechar o AlertDialog somente, sem salvar infos
+            Navigator.of(context)
+                .pop(); // Fechar o AlertDialog somente, sem salvar infos
           },
           child: const Text(
             'Cancelar',
-            style: TextStyle(color: Colors.black54), // Texto mais opaco para o botão cancelar
+            style: TextStyle(
+                color:
+                    Colors.black54), // Texto mais opaco para o botão cancelar
           ),
         ),
         ElevatedButton(
           onPressed: () {
             // Lógica para salvar os dados vem aqui posteriormente
-            Navigator.of(context).pop(); 
+            Navigator.of(context).pop();
           },
           child: const Text('Salvar'),
         ),
@@ -195,8 +194,9 @@ class ExpenseItem extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
           border: Border(
-             bottom: BorderSide(color: Color.fromARGB(255, 81, 83, 81),
-            ), 
+            bottom: BorderSide(
+              color: Color.fromARGB(255, 81, 83, 81),
+            ),
           ),
         ),
         child: Row(
@@ -239,4 +239,3 @@ Icon getCategoryIcon(String category) {
       return const Icon(Icons.category);
   }
 }
-
