@@ -1,4 +1,4 @@
-import 'package:expense_tracker/repository/enums.dart';
+import 'package:expense_tracker/enum/enums.dart';
 import 'package:expense_tracker/pages/profile/Profile.dart';
 import 'package:expense_tracker/pages/profile/components/customBottomBar.dart';
 import 'package:expense_tracker/charts/pieChart.dart';
