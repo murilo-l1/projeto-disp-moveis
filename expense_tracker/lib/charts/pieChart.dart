@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class PieChartImpl extends StatefulWidget{
-  const PieChartImpl({Key? key}) : super(key: key);
+  const PieChartImpl({super.key});
 
     @override
     _PieChartImplState createState() => _PieChartImplState();
@@ -65,7 +65,21 @@ class _PieChartImplState extends State<PieChartImpl> {
   @override
   Widget build(BuildContext context) {
     List<double> expensesByCategory = getExpensesByCategory(expenses);
-    double totalExpenses = expensesByCategory.reduce((a, b) => a + b);  
+    double totalExpenses = expensesByCategory.reduce((a, b) => a + b); 
+
+    // linha de código pra não ficar um despesas em vão, pode ser melhor só tirar isso no futuro.
+    if(totalExpenses == 0){
+      Alignment.topCenter;
+      return Text(
+        'Adicione uma despesa para começar!',
+        style: TextStyle(
+          fontSize: 22.0,
+          fontStyle: FontStyle.italic
+
+        ),
+      );
+    }
+
     return Stack(
       alignment: Alignment.center,
       children: [

@@ -1,4 +1,3 @@
-import 'dart:io' show OSError;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';

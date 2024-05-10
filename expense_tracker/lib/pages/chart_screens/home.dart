@@ -8,7 +8,7 @@
   import 'package:flutter/material.dart';
 
   class HomePage extends StatefulWidget {
-    const HomePage({Key? key}) : super(key: key);
+    const HomePage({super.key});
 
     @override
     _HomePageState createState() => _HomePageState();
@@ -34,7 +34,7 @@
             const Legend(),
 
             const SizedBox(height: 10.0),
-            Divider(),
+            const Divider(),
             const SizedBox(height: 5.0),
 
             // ListView
@@ -119,8 +119,15 @@
                     labelText: 'Nome',
                   ),
                   onChanged: (value) {
-                    expenseName = value;
+                    if(!value.contains(RegExp(r'[0-9]'))){
+                      expenseName = value;
+                    }
+                    else{
+                      showErrorMessage(context);
+                    }
+                    
                   },
+                  
                 ),
                 // TextField para inserir o valor da despesa
                 TextField(
@@ -179,7 +186,8 @@
           ),
           ElevatedButton(
         onPressed: () async {
-        // Criando um objeto de despesa baseado na escolha do usuário pra mandar isso pro banco
+          if(expenseName.isNotEmpty && expenseValue > 0){
+        
         Expense newExpense = Expense(
         name: expenseName,
         amount: expenseValue,
@@ -191,7 +199,12 @@
       
       if (result != 0) {
         Navigator.of(context).pop();
-      } 
+        showSuccessDialog(context);
+      }
+    }
+    else{
+        showErrorMessage(context);
+    }
     },
     child: const Text('Salvar'),
   ),
@@ -199,6 +212,43 @@
       ),
     );
   }
+
+  void showErrorMessage(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: const Text(
+            'Por favor, preencha todos os campos corretamente',
+            style: TextStyle(color: Colors.black),
+            ),
+        ),
+    );
+  }
+
+  void showSuccessDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      content: Row(
+        children: [
+          Icon(
+            Icons.check_circle,
+            color: Colors.green,
+            size: 24,
+          ),
+          const SizedBox(width: 16),
+          Text(
+            'Despesa salva com sucesso!',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+
+}
 
   class ExpenseItem extends StatelessWidget {
     final String category;
