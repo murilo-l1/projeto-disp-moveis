@@ -18,9 +18,18 @@ class DatabaseHelper {
   }
 
   static Future<int> addExpense(Expense expense) async {
+    try{
+    
     final db = await _getDB();
-    return await db.insert('EXPENSES', expense.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    
+    Future<int> result = db.insert('EXPENSES', expense.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
+    
+    return result;
+    }
+    catch(e){
+      print('error adding expense: $e' );
+      return 0;
+    }
   }
 
   static Future<List<Expense>?> getExpenses() async {

@@ -1,7 +1,7 @@
 import 'package:expense_tracker/pages/registro/registro.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:expense_tracker/pages/home.dart';
+import 'package:expense_tracker/pages/chart_screens/home.dart';
 import 'package:expense_tracker/pages/login/components/log.dart'; 
 import 'botoes_social.dart';
 

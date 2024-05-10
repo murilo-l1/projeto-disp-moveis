@@ -1,7 +1,9 @@
 import 'package:expense_tracker/enum/enums.dart';
+import 'package:expense_tracker/models/expense_model.dart';
 import 'package:expense_tracker/pages/profile/Profile.dart';
 import 'package:expense_tracker/pages/profile/components/customBottomBar.dart';
 import 'package:expense_tracker/charts/pieChart.dart';
+import 'package:expense_tracker/services/database_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -86,11 +88,12 @@ AppBar buildAppBar(BuildContext context) {
 }
 
 // quando o usario for inserir numa nova despesa, essa funcao sera chamada
-void openExpenseBox(BuildContext context) {
+void openExpenseBox(BuildContext context, String category) {
   // Variáveis para armazenar os valores inseridos pelo usuário
   String expenseName = '';
   double expenseValue = 0.0;
   DateTime selectedDate = DateTime.now();
+  
 
   TextEditingController dateController =
       TextEditingController(text: selectedDate.toString().split(' ')[0]);
@@ -165,16 +168,27 @@ void openExpenseBox(BuildContext context) {
             'Cancelar',
             style: TextStyle(
                 color:
-                    Colors.black54), // Texto mais opaco para o botão cancelar
+                    Colors.black54),
           ),
         ),
         ElevatedButton(
-          onPressed: () {
-            // Lógica para salvar os dados vem aqui posteriormente
-            Navigator.of(context).pop();
-          },
-          child: const Text('Salvar'),
-        ),
+      onPressed: () async {
+      // Criando um objeto de despesa baseado na escolha do usuário pra mandar isso pro banco
+      Expense newExpense = Expense(
+      name: expenseName,
+      amount: expenseValue,
+      date: selectedDate,
+      category: category,
+    );
+
+    int result = await DatabaseHelper.addExpense(newExpense);
+    
+    if (result != 0) {
+      Navigator.of(context).pop();
+    } 
+  },
+  child: const Text('Salvar'),
+),
       ],
     ),
   );
@@ -189,7 +203,7 @@ class ExpenseItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => openExpenseBox(context),
+      onTap: () => openExpenseBox(context, category),
       child: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
