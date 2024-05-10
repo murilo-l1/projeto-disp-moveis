@@ -1,14 +1,71 @@
+import 'package:expense_tracker/models/expense_model.dart';
+import 'package:expense_tracker/services/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
+class PieChartImpl extends StatefulWidget{
+  const PieChartImpl({Key? key}) : super(key: key);
 
-// gráfico de pizza das despesas
-// isso daqui eventualmente tem que estar em outro lugar e procurar arrumar a posicao da legenda
-class PieChartImpl extends StatelessWidget {
-   const PieChartImpl({super.key});
+    @override
+    _PieChartImplState createState() => _PieChartImplState();
+}
+
+
+class _PieChartImplState extends State<PieChartImpl> {
+    List<Expense> expenses = [];
+
+    @override
+    void initState() {
+      super.initState();
+      fetchExpenses();
+    }
+
+    Future<void> fetchExpenses() async {
+      List<Expense>? fetchedExpenses = await DatabaseHelper.getExpenses();
+
+      if (fetchedExpenses != null && fetchedExpenses.isNotEmpty) {
+        setState(() {
+          expenses = fetchedExpenses;
+        });
+      } else {
+        setState(() {
+          expenses = [];
+        });
+      }
+    }
+
+  
+  List<double> getExpensesByCategory(List<Expense> expenses) {
+  List<double> expensesByCategory = List.filled(4, 0.0);
+
+  for (Expense expense in expenses) {
+    
+    switch (expense.category) {
+      case 'Saúde':
+        expensesByCategory[0] += expense.amount;
+        break;
+      case 'Lazer':
+        expensesByCategory[1] += expense.amount;
+        break;
+      case 'Transporte':
+        expensesByCategory[2] += expense.amount;
+        break;
+      case 'Alimentação':
+        expensesByCategory[3] += expense.amount;
+        break;
+      default:
+        
+        break;
+    }
+  }
+
+  return expensesByCategory;
+}
 
   @override
   Widget build(BuildContext context) {
+    List<double> expensesByCategory = getExpensesByCategory(expenses);
+    double totalExpenses = expensesByCategory.reduce((a, b) => a + b);  
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -27,35 +84,35 @@ class PieChartImpl extends StatelessWidget {
             sections: [
               // saúde
               PieChartSectionData(
-                value: 20, // esses valores serao mudados pela soma total na parte 2
+                value: expensesByCategory[0],
                 color: const Color.fromARGB(255, 164, 76, 76),
                 radius: 80,
                 borderSide: const BorderSide(color: Colors.black, width: 0.5),
-                title: '20%'
+                title: '${((expensesByCategory[0] / totalExpenses) * 100).toStringAsFixed(1)}%',
                 ),
               // lazer
               PieChartSectionData(
-                value: 20,
+                value: expensesByCategory[1],
                 color: const Color.fromARGB(255, 212, 151, 85),
                 radius: 80,
                 borderSide: const BorderSide(color: Colors.black, width: 0.5),
-                title: '20%'
+                title: '${((expensesByCategory[1] / totalExpenses) * 100).toStringAsFixed(1)}%',
                 ),
               // transporte
               PieChartSectionData(
-                value: 40,
+                value: expensesByCategory[2],
                 color: const Color.fromARGB(255, 19, 108, 181),
                 radius: 80,
                 borderSide: const BorderSide(color: Colors.black, width: 0.5),
-                title: '40%'
+                title: '${((expensesByCategory[2] / totalExpenses) * 100).toStringAsFixed(1)}%',
               ),
               // alimentação
               PieChartSectionData(
-                value: 20,
+                value: expensesByCategory[3],
                 color: const Color.fromARGB(255, 109, 192, 114),
                 radius: 80,
                 borderSide: const BorderSide(color: Colors.black, width: 0.5),
-                title: '20%'
+                title: '${((expensesByCategory[3] / totalExpenses) * 100).toStringAsFixed(1)}%',
                 ),
             ],
           ),

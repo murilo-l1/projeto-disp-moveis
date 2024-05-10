@@ -92,7 +92,7 @@ class BarChartImpl extends StatelessWidget {
       height: 250, 
       child: BarChart(
         BarChartData(
-          maxY: 100,
+          maxY: 4000,
           minY: 0,
           gridData: const FlGridData(show: false),
           borderData: FlBorderData(show: false),

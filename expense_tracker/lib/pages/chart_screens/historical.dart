@@ -17,25 +17,12 @@ class _HistoricalPageState extends State<HistoricalPage> {
 
 
 List<Expense> expenses = [];
-List<double> monthExpenses = [
-  10,
-  20,
-  30,
-  40,
-  12,
-  10,
-  10,
-  16,
-  20,
-  80,
-  60,
-  15
-];
-    
-    @override
+
+
+   @override
   void initState() {
     super.initState();
-    fetchExpenses(); // quando inicializar a pagina vai la no banco buscar as despesas e criar uma lista com esses dados
+    fetchExpenses();
   }
 
   Future<void> fetchExpenses() async {
@@ -53,8 +40,33 @@ List<double> monthExpenses = [
   }
 }
 
- @override
+List<double> createMonthExpensesList() {
+    List<double> monthExpenses = List.filled(12, 0.0);
+
+    for (int i = 0; i < 12; i++) {
+      // Convert month number to string (1-based)
+      String monthString = (i + 1).toString().padLeft(2, '0');
+      String yearMonth = '${DateTime.now().year}-$monthString';
+
+      // Filter expenses by month
+      List<Expense> expensesInMonth = expenses
+          .where((expense) =>
+              '${expense.date.year}-${expense.date.month.toString().padLeft(2, '0')}' == yearMonth)
+          .toList();
+
+      // Calculate total expenses in the month
+      double totalExpensesInMonth = expensesInMonth.fold(0, (sum, expense) => sum + expense.amount);
+
+      monthExpenses[i] = totalExpensesInMonth;
+    }
+
+    return monthExpenses;
+  }
+
+  
+@override
   Widget build(BuildContext context) {
+    List<double> monthExpenses = createMonthExpensesList();
     return Scaffold(
       //backgroundColor: Colors.grey[200],
       appBar: buildAppBar(context),

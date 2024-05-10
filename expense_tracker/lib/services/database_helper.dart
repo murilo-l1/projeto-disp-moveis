@@ -42,4 +42,25 @@ class DatabaseHelper {
 
     return List.generate(maps.length, (index) => Expense.fromJson(maps[index]));
   }
+
+  static Future<List<Expense>?> getExpensesByMonth(String month) async{
+    final db = await _getDB();
+    final List<Map<String, dynamic>> maps = await db.query('EXPENSES');
+
+    if(maps.isEmpty){
+      return null;
+    }
+
+    List<Expense> expenses = [];
+    for (var map in maps) {
+      Expense expense = Expense.fromJson(map);
+      
+      String expenseMonth = '${expense.date.year}-${expense.date.month}';
+      if (expenseMonth == month) {
+        expenses.add(expense);
+      }
+    }
+
+    return expenses;
+  }
 }
