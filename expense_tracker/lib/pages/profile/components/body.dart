@@ -13,7 +13,9 @@ class Body extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(height: 45,),
+          const SizedBox(
+            height: 45,
+          ),
           const ProfilePicture(),
           ProfileMenu(
             icon: LineAwesomeIcons.user,
@@ -23,11 +25,11 @@ class Body extends StatelessWidget {
             backgroundOpacity: 0.20,
           ),
           ProfileMenu(
-          icon: LineAwesomeIcons.envelope,
-          text: 'Alterar e-mail',
-          press: () => openEditEmailBox(context),
-          backgroundColor: Colors.blue[100],
-          backgroundOpacity: 0.2,
+            icon: LineAwesomeIcons.envelope,
+            text: 'Alterar e-mail',
+            press: () => openEditEmailBox(context),
+            backgroundColor: Colors.blue[100],
+            backgroundOpacity: 0.2,
           ),
           ProfileMenu(
             icon: LineAwesomeIcons.lock,
@@ -40,12 +42,12 @@ class Body extends StatelessWidget {
             icon: LineAwesomeIcons.door_open,
             text: 'Sair',
             press: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
               ),
-            textColor: Colors.red, 
+            ),
+            textColor: Colors.red,
             backgroundColor: Colors.red[100],
             backgroundOpacity: 0.5,
           ),
@@ -55,7 +57,6 @@ class Body extends StatelessWidget {
   }
 }
 
-
 void openEditNameBox(BuildContext context) {
   String newName = '';
 
@@ -64,14 +65,14 @@ void openEditNameBox(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Editar Nome'), 
+      title: const Text('Editar Nome'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
-            controller: nameController, 
+            controller: nameController,
             decoration: const InputDecoration(
-              labelText: 'Nome', 
+              labelText: 'Nome',
             ),
             onChanged: (value) {
               newName = value;
@@ -84,15 +85,15 @@ void openEditNameBox(BuildContext context) {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text(
             'Cancelar',
-            style: TextStyle(color: Colors.black54), 
+            style: TextStyle(color: Colors.black54),
           ),
         ),
         ElevatedButton(
           onPressed: () {
-            print('New name: $newName'); 
-            Navigator.of(context).pop(); 
+            print('New name: $newName');
+            Navigator.of(context).pop();
           },
-          child: const Text('Salvar'), 
+          child: const Text('Salvar'),
         ),
       ],
     ),
@@ -141,7 +142,7 @@ void openEditEmailBox(BuildContext context) {
         ),
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pop(); 
+            Navigator.of(context).pop();
           },
           child: const Text('Salvar'),
         ),

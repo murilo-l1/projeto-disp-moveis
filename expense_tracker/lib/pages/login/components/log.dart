@@ -1,8 +1,10 @@
+import 'package:expense_tracker/models/user_model.dart';
 import 'package:expense_tracker/pages/esqueci_senha/esqueci_senha.dart';
+import 'package:expense_tracker/services/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:expense_tracker/pages/login/components/log_error.dart';
-import 'body.dart';
+import 'package:expense_tracker/pages/chart_screens/home.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -12,26 +14,54 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-
-  final gformKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   final List<String> errors = [];
   bool remember = false;
+
+  bool isLoginTrue = false;
+
+  final db = DatabaseHelper();
+
+  final email = TextEditingController();
+  final password = TextEditingController();
+
+  Login() async {
+    var response =
+        await db.Login(User(email: email.text, password: password.text));
+    if (response == true) {
+      if (!mounted) return;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    } else {
+      setState(() {
+        isLoginTrue = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: gformKey,
+      key: formKey,
       child: Column(
         children: [
           insertEmail(),
-          const SizedBox(height: 25,),
+          const SizedBox(
+            height: 25,
+          ),
           insertPassword(),
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Error(errors: errors),
           Row(
             children: [
               Checkbox(
-                value: remember, 
+                value: remember,
                 activeColor: const Color.fromARGB(255, 0, 188, 201),
                 onChanged: (Value) {
                   setState(() {
@@ -42,25 +72,34 @@ class _LoginFormState extends State<LoginForm> {
               const Text("Manter login"),
               const Spacer(),
               GestureDetector(
-  onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const EsqueciSenha(), // Substitua por sua página de esqueceu a senha
-      ),
-    );
-  },
-  child: const Text(
-    "Esqueceu a senha?",
-    style: TextStyle(
-      decoration: TextDecoration.underline,
-    ),
-  ),
-)
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const EsqueciSenha(), // Substitua por sua página de esqueceu a senha
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Esqueceu a senha?",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              )
             ],
           ),
-          buttonLogin(context),
-          const SizedBox(height: 20,),
+          isLoginTrue
+              ? const Text(
+                  "Email ou senha incorretos",
+                  style: TextStyle(color: Colors.red),
+                )
+              : const SizedBox(),
+          buttonLogin(context, formKey, validateEmail, validatePassword, Login),
+          const SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );
@@ -68,55 +107,105 @@ class _LoginFormState extends State<LoginForm> {
 
   TextFormField insertPassword() {
     return TextFormField(
-          obscureText: true,
-          decoration: InputDecoration(
-            labelText: "Senha",
-            hintText: "Digite sua senha.",
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 45,
-              vertical: 20,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(22),
-              borderSide: const BorderSide(color: Colors.blue),
-              gapPadding: 10,
-            ),
-            suffixIcon: const Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Icon(LineAwesomeIcons.lock, size: 30,
-              ),
-            ),
+      validator: validatePassword,
+      obscureText: true,
+      decoration: InputDecoration(
+        labelText: "Senha",
+        hintText: "Digite sua senha.",
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 45,
+          vertical: 20,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(22),
+          borderSide: const BorderSide(color: Colors.blue),
+          gapPadding: 10,
+        ),
+        suffixIcon: const Padding(
+          padding: EdgeInsets.only(right: 20),
+          child: Icon(
+            LineAwesomeIcons.lock,
+            size: 30,
           ),
-        );
+        ),
+      ),
+    );
   }
 
   TextFormField insertEmail() {
     return TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          validator: (value) {
-            if(value == null || value.isEmpty) {
-            errors.add("Por favor, digite seu email");
-            }
-            return null;
-          },
-          decoration: InputDecoration(
-            labelText: "Email",
-            hintText: "Digite seu email.",
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 45,
-              vertical: 20,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(22),
-              borderSide: const BorderSide(color: Colors.blue),
-              gapPadding: 10,
-            ),
-            suffixIcon: const Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Icon(LineAwesomeIcons.envelope, size: 30,
-              ),
-            ),
+      keyboardType: TextInputType.emailAddress,
+      validator: validateEmail,
+      decoration: InputDecoration(
+        labelText: "Email",
+        hintText: "Digite seu email.",
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 45,
+          vertical: 20,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(22),
+          borderSide: const BorderSide(color: Colors.blue),
+          gapPadding: 10,
+        ),
+        suffixIcon: const Padding(
+          padding: EdgeInsets.only(right: 20),
+          child: Icon(
+            LineAwesomeIcons.envelope,
+            size: 30,
           ),
-        );
+        ),
+      ),
+    );
   }
+
+  String? validateEmail(String? value) {
+    if (value!.isEmpty) {
+      return "email é necessário";
+    }
+    return null;
+  }
+
+  String? validatePassword(String? value) {
+    if (value!.isEmpty) {
+      return "senha é necessária";
+    }
+    return null;
+  }
+}
+
+Padding buttonLogin(
+    BuildContext context,
+    GlobalKey<FormState> formKey,
+    String? Function(String?) validateEmail,
+    String? Function(String?) validatePassword,
+    Function Login) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+    child: SizedBox(
+      width: 500,
+      height: 60,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.all(20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          backgroundColor: const Color.fromARGB(255, 0, 188, 201),
+        ),
+        onPressed: () {
+          if (formKey.currentState!.validate()) {
+            // Executando a função de login diretamente
+            Login();
+          }
+        },
+        child: const Text(
+          'Continuar',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255), fontSize: 18),
+        ),
+      ),
+    ),
+  );
 }
