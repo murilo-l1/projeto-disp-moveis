@@ -29,29 +29,22 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.6
+  fl_chart: ^0.63.0
   flutter:
     sdk: flutter
-  sqflite: ^2.3.3+1
-  sqflite_common_ffi: any
-  sqflite_common_ffi_web: '>=0.1.0-dev.1'
+  flutter_svg: any
   isar_flutter_libs: ^3.1.0+1
   line_awesome_flutter: ^2.0.0
-  path_provider: ^2.1.2
-  fl_chart: ^0.63.0
-
-  flutter_svg: any
   path: any
+  path_provider: ^2.1.2
+  sqflite: ^2.3.3+1
+  sqflite_common_ffi: any
+  sqflite_common_ffi_web: ">=0.1.0-dev.1"
+  sqlite3_flutter_libs: ^0.5.21
 dev_dependencies:
-  
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+  build_runner: ^2.4.9
   flutter_lints: ^3.0.0
   isar_generator: ^3.1.0+1
-  build_runner: ^2.4.9
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
