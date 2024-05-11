@@ -1,0 +1,3 @@
+class DatabaseUserHelper {
+  static cont
+}
