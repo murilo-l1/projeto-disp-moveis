@@ -8,7 +8,7 @@ class User {
     required this.email,
     required this.password,
     this.id,
-    this.name = '',murilo
+    this.name = 'murilo',
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
