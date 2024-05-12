@@ -6,7 +6,7 @@ import 'package:expense_tracker/pages/login/components/botoes_social.dart';
 import 'package:expense_tracker/pages/login/login.dart';
 
 class Body extends StatelessWidget {
-  Body({Key? key}) : super(key: key);
+  Body({super.key});
   final formKey = GlobalKey<FormState>();
 
   // Define TextEditingController instances
