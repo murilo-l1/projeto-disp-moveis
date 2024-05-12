@@ -242,7 +242,7 @@ void showSuccessDialog(BuildContext context) {
 
 class ExpenseItem extends StatelessWidget {
   final String category;
-  double itemValue = 0.0;
+  
 
   ExpenseItem({super.key, required this.category});
 
@@ -261,10 +261,6 @@ class ExpenseItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Text(
-              'R\$$itemValue',
-              style: const TextStyle(fontSize: 18.0),
-            ),
             const Spacer(),
             Row(
               children: [
