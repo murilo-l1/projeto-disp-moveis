@@ -11,6 +11,7 @@ class Expense {
     required this.amount,
     required this.date,
     required this.category,
+    
   });
 
   factory Expense.fromJson(Map<String, dynamic> json) {
