@@ -10,7 +10,7 @@ class DatabaseHelper {
 
   // quando for adicionar usuarios criaremos uma tabela para ele, e a table de despesas tambem vai ter um usuario como campo!
 
-  /*String user ='CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT)';*/
+  /*String USERS ='CREATE TABLE USERS(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT)';*/
 
   static Future<Database> _getDB() async {
     return openDatabase(join(await getDatabasesPath(), _databaseName),
@@ -18,7 +18,7 @@ class DatabaseHelper {
       await db.execute(
           'CREATE TABLE EXPENSES(id INTEGER PRIMARY KEY, name TEXT, amount REAL, date TEXT, category TEXT)');
       await db.execute(
-          'CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT)');
+          'CREATE TABLE USERS(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, password TEXT)');
     }, version: _version);
   }
 
@@ -69,11 +69,11 @@ class DatabaseHelper {
   }
 
   // LOGIN METHOD
-  Future<bool> Login(User user) async {
+  Future<bool> Login(User USERS) async {
     final db = await _getDB();
 
     var result = await db.rawQuery(
-        "select * from users where email = '${user.email}' AND password = '${user.password}'");
+        "select * from USERS where email = '${USERS.email}' AND password = '${USERS.password}'");
     if (result.isNotEmpty) {
       return true;
     } else {
@@ -82,8 +82,28 @@ class DatabaseHelper {
   }
 
   // SIGN UP METHOD
-  Future<int> signup(User user) async {
+  Future<int> signup(User USERS) async {
+  final db = await _getDB();
+  final int userId = await db.insert('USERS', USERS.toJson());
+  print('Novo usuário cadastrado - Email: ${USERS.email}, Senha: ${USERS.password}');
+  return userId;
+}
+  
+
+  //sim isso aqui
+  static Future<List<User>?> getUsers() async {
+  try {
     final db = await _getDB();
-    return db.insert('user', user.toJson());
+    final List<Map<String, dynamic>> maps = await db.query('USERS');
+
+    if (maps.isNotEmpty) {
+      return List.generate(maps.length, (index) => User.fromJson(maps[index]));
+    } else {
+      return null;
+    }
+  } catch (e) {
+    print('Erro ao obter usuários: $e');
+    return null;
   }
+}
 }
