@@ -1,5 +1,5 @@
 import 'package:expense_tracker/pages/login/login.dart';
-import 'package:expense_tracker/pages/registro/registro.dart';
+import 'package:expense_tracker/pages/sign_up/registro.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
@@ -9,9 +9,11 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView( // Wrap entire content to allow scrolling
+      child: SingleChildScrollView(
+        // Wrap entire content to allow scrolling
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0), // Adjusted padding
+          padding:
+              const EdgeInsets.symmetric(horizontal: 20.0), // Adjusted padding
           child: Column(
             children: [
               const SizedBox(height: 60.0), // Consistent spacing
@@ -65,7 +67,6 @@ class Body extends StatelessWidget {
   }
 }
 
-
 class EsqueciSenhaEnvio extends StatefulWidget {
   const EsqueciSenhaEnvio({super.key});
 
@@ -81,38 +82,40 @@ class _EsqueciSenhaEnvioState extends State<EsqueciSenhaEnvio> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              if(value == null || value.isEmpty) {
-              errors.add("Por favor, digite seu email");
-              }
-              return null;
-            },
-            decoration: InputDecoration(
-              labelText: "Email",
-              hintText: "Digite seu email.",
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 45,
-                vertical: 20,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(22),
-                borderSide: const BorderSide(color: Colors.blue),
-                gapPadding: 10,
-              ),
-              suffixIcon: const Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: Icon(LineAwesomeIcons.envelope, size: 30,
-                ),
-              ),
+        keyboardType: TextInputType.emailAddress,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            errors.add("Por favor, digite seu email");
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          labelText: "Email",
+          hintText: "Digite seu email.",
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 45,
+            vertical: 20,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(22),
+            borderSide: const BorderSide(color: Colors.blue),
+            gapPadding: 10,
+          ),
+          suffixIcon: const Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: Icon(
+              LineAwesomeIcons.envelope,
+              size: 30,
             ),
           ),
+        ),
+      ),
     );
   }
 }
 
 Padding buttonLogin(BuildContext context) {
-    return Padding(
+  return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
     child: SizedBox(
       width: 500,
@@ -126,16 +129,16 @@ Padding buttonLogin(BuildContext context) {
           backgroundColor: const Color.fromARGB(255, 0, 188, 201),
         ),
         onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
-                  ),
-                ),
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginPage(),
+          ),
+        ),
         child: const Text(
           'Enviar',
           textAlign: TextAlign.center,
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 18),
-          
+          style: TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255), fontSize: 18),
         ),
       ),
     ),

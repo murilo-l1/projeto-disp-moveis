@@ -1,9 +1,6 @@
-import 'package:expense_tracker/pages/registro/registro.dart';
+import 'package:expense_tracker/pages/sign_up/registro.dart';
 import 'package:flutter/material.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:expense_tracker/pages/chart_screens/home.dart';
-import 'package:expense_tracker/pages/login/components/log.dart'; 
-import 'botoes_social.dart';
+import 'package:expense_tracker/pages/login/components/log.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -15,7 +12,7 @@ class Body extends StatelessWidget {
         padding: const EdgeInsets.only(top: 40),
         child: SizedBox(
           width: double.infinity,
-          child: SingleChildScrollView( // Wrap potentially overflowing content
+          child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -36,6 +33,7 @@ class Body extends StatelessWidget {
                   const SizedBox(height: 30),
                   const LoginForm(),
                   const SizedBox(height: 50),
+                  /*
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -53,6 +51,7 @@ class Body extends StatelessWidget {
                       ),
                     ],
                   ),
+                  */
                   const SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -80,7 +79,7 @@ class Body extends StatelessWidget {
                             color: Color.fromARGB(255, 0, 188, 201),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   )
                 ],
@@ -91,37 +90,4 @@ class Body extends StatelessWidget {
       ),
     );
   }
-}
-
-
-
-Padding buttonLogin(BuildContext context) {
-    return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-    child: SizedBox(
-      width: 500,
-      height: 60,
-      child: TextButton(
-        style: TextButton.styleFrom(
-          padding: const EdgeInsets.all(20),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-          backgroundColor: const Color.fromARGB(255, 0, 188, 201),
-        ),
-        onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HomePage(),
-                  ),
-                ),
-        child: const Text(
-          'Continuar',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 18),
-          
-        ),
-      ),
-    ),
-  );
 }
