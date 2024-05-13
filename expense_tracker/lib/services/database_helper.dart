@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:expense_tracker/models/expense_model.dart';
 import 'package:expense_tracker/models/user_model.dart';
 import 'package:sqflite/sqflite.dart';
@@ -8,10 +10,8 @@ class DatabaseHelper {
   static const int _version = 1;
   static const String _databaseName = 'expense_tracker.db';
 
-  // quando for adicionar usuarios criaremos uma tabela para ele, e a table de despesas tambem vai ter um usuario como campo!
-
-  /*String USERS ='CREATE TABLE USERS(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT)';*/
-
+  // Pra poder adicionar o campo de usuário corretamente é necessário adicionar:
+  // userId INTEGER FOREIGN KEY(userId) REFERENCES USERS(id)
   static Future<Database> _getDB() async {
     return openDatabase(join(await getDatabasesPath(), _databaseName),
         onCreate: (db, version) async {
@@ -25,7 +25,6 @@ class DatabaseHelper {
   static Future<int> addExpense(Expense expense) async {
     try {
       final db = await _getDB();
-
       Future<int> result = db.insert('EXPENSES', expense.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace);
 
@@ -47,25 +46,14 @@ class DatabaseHelper {
     return List.generate(maps.length, (index) => Expense.fromJson(maps[index]));
   }
 
-  static Future<List<Expense>?> getExpensesByMonth(String month) async {
-    final db = await _getDB();
-    final List<Map<String, dynamic>> maps = await db.query('EXPENSES');
+  static Future<void> resetExpenses() async {
+    try {
+      final db = await _getDB();
 
-    if (maps.isEmpty) {
-      return null;
+      await db.delete('EXPENSES');
+    } catch (e) {
+      print('Error resetting EXPENSES table: $e');
     }
-
-    List<Expense> expenses = [];
-    for (var map in maps) {
-      Expense expense = Expense.fromJson(map);
-
-      String expenseMonth = '${expense.date.year}-${expense.date.month}';
-      if (expenseMonth == month) {
-        expenses.add(expense);
-      }
-    }
-
-    return expenses;
   }
 
   // LOGIN METHOD
@@ -83,27 +71,28 @@ class DatabaseHelper {
 
   // SIGN UP METHOD
   Future<int> signup(User USERS) async {
-  final db = await _getDB();
-  final int userId = await db.insert('USERS', USERS.toJson());
-  print('Novo usuário cadastrado - Email: ${USERS.email}, Senha: ${USERS.password}');
-  return userId;
-}
-  
+    final db = await _getDB();
+    final int userId = await db.insert('USERS', USERS.toJson());
+    print(
+        'Novo usuário cadastrado - Email: ${USERS.email}, Senha: ${USERS.password}');
+    return userId;
+  }
 
   //sim isso aqui
   static Future<List<User>?> getUsers() async {
-  try {
-    final db = await _getDB();
-    final List<Map<String, dynamic>> maps = await db.query('USERS');
+    try {
+      final db = await _getDB();
+      final List<Map<String, dynamic>> maps = await db.query('USERS');
 
-    if (maps.isNotEmpty) {
-      return List.generate(maps.length, (index) => User.fromJson(maps[index]));
-    } else {
+      if (maps.isNotEmpty) {
+        return List.generate(
+            maps.length, (index) => User.fromJson(maps[index]));
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Erro ao obter usuários: $e');
       return null;
     }
-  } catch (e) {
-    print('Erro ao obter usuários: $e');
-    return null;
   }
-}
 }

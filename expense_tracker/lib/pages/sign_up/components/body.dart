@@ -210,6 +210,7 @@ class Body extends StatelessWidget {
               //login method
 
               final db = DatabaseHelper();
+              DatabaseHelper.resetExpenses();
               db
                   .signup(User(
                       email: emailController.text,

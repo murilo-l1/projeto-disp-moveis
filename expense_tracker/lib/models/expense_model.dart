@@ -5,13 +5,12 @@ class Expense {
   final DateTime date;
   final String category;
 
-  const Expense({
+  Expense({
     this.id,
     required this.name,
     required this.amount,
     required this.date,
     required this.category,
-    
   });
 
   factory Expense.fromJson(Map<String, dynamic> json) {
