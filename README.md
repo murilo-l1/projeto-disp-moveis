@@ -23,7 +23,7 @@
 <h3>Funcionalidades em produção </h3>
 
 <p>
-    O app ainda não conta com a escala de manipulação de banco de dados por estar em fase embrionária, portanto ainda usa dados fictícios para representar os gastos por categoria, por mês e consequentemente o histórico das despesas de cada usuário. Também não contém ainda autenticação de usuário na etapa de registros para vincular seus dados à um e-mail e senha, de forma análoga ainda não tem a capacidade nativa de usar o ícone da câmera para tirar uma foto com o dispositivo móveis, ademais essas e posteriores funcionalidades serão implementadas em seu momento.
+   Implementadas as capacidades de registro com a validação de credenciais tal qual o armazenamento em banco de dados das despesas registradas agora está faltante apenas a capacidade nativa de tirar uma foto com o dispositivo móvel.
 </p>
 
 
