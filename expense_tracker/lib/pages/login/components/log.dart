@@ -1,11 +1,11 @@
 import 'package:expense_tracker/models/user_model.dart';
-import 'package:expense_tracker/pages/esqueci_senha/esqueci_senha.dart';
 import 'package:expense_tracker/services/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:expense_tracker/pages/login/components/log_error.dart';
 import 'package:expense_tracker/pages/chart_screens/home.dart';
 import 'package:collection/collection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -42,6 +42,9 @@ class _LoginFormState extends State<LoginForm> {
       if (user != null && user.password == password.text) {
         // Login bem-sucedido
         if (!mounted) return;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('loggedInUserEmail', user.email);
+        await prefs.setString('loggedInUserName', user.name);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -63,7 +66,6 @@ class _LoginFormState extends State<LoginForm> {
   }
 }
 
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -76,9 +78,10 @@ class _LoginFormState extends State<LoginForm> {
           ),
           insertPassword(),
           const SizedBox(
-            height: 20,
+            height: 60,
           ),
           Error(errors: errors),
+          /*
           Row(
             children: [
               Checkbox(
@@ -111,6 +114,7 @@ class _LoginFormState extends State<LoginForm> {
               )
             ],
           ),
+          */
           isLoginTrue
               ? const Text(
                   "Email ou senha incorretos",
@@ -119,7 +123,7 @@ class _LoginFormState extends State<LoginForm> {
               : const SizedBox(),
           buttonLogin(context, formKey, validateEmail, validatePassword, Login),
           const SizedBox(
-            height: 20,
+            height: 60,
           ),
         ],
       ),

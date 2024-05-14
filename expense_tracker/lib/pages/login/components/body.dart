@@ -27,31 +27,12 @@ class Body extends StatelessWidget {
                     ),
                   ),
                   const Text(
-                    "Entre com o seu email e senha \nou continue com sua rede social",
+                    "Entre com o seu email e senha \n",
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 50),
                   const LoginForm(),
                   const SizedBox(height: 50),
-                  /*
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      BotoesSocial(
-                        icon: LineAwesomeIcons.google_logo,
-                        color: Colors.black,
-                        size: 30,
-                        press: () {},
-                      ),
-                      BotoesSocial(
-                        icon: LineAwesomeIcons.facebook_f,
-                        color: Colors.black,
-                        size: 30,
-                        press: () {},
-                      ),
-                    ],
-                  ),
-                  */
                   const SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
