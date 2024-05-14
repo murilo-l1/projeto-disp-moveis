@@ -244,7 +244,7 @@ class ExpenseItem extends StatelessWidget {
   final String category;
   
 
-  ExpenseItem({super.key, required this.category});
+  const ExpenseItem({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {

@@ -1,15 +1,14 @@
 class User {
   final int? id;
   String name;
-  final String email;
-  final String password;
+  String email;
+  String password;
 
   User({
     required this.email,
     required this.password,
     this.id,
-    this.name = 'murilo',
-  });
+  }): this.name = email.split('@')[0];
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -25,4 +24,9 @@ class User {
         'email': email,
         'password': password,
       };
+  
+  void setName(String newName) {
+    this.name = newName;
+  }
 }
+

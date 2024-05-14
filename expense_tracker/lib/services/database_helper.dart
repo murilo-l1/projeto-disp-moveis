@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:expense_tracker/models/expense_model.dart';
 import 'package:expense_tracker/models/user_model.dart';
 import 'package:sqflite/sqflite.dart';
@@ -95,4 +93,94 @@ class DatabaseHelper {
       return null;
     }
   }
+
+  // atualiza ususario
+  static Future<void> updateUser(User user) async {
+    try {
+      final db = await _getDB();
+      await db.update(
+        'USERS',
+        user.toJson(),
+        where: 'id = ?',
+        whereArgs: [user.id],
+      );
+    } catch (e) {
+      print('Error updating user: $e');
+    }
+  }
+
+  // pega usuario
+  Future<void> fetchUserDetails() async {
+  try {
+    // Obtém a lista de usuários do banco de dados
+    List<User>? users = await DatabaseHelper.getUsers();
+    
+    // Verifica se a lista de usuários não é nula e não está vazia
+    if (users != null && users.isNotEmpty) {
+      // Aqui você pode acessar os detalhes do primeiro usuário na lista (ou qualquer outro usuário conforme necessário)
+      User user = users[0]; // Supondo que você deseja os detalhes do primeiro usuário
+      
+      // Agora você pode acessar o nome e o email do usuário
+      String name = user.name;
+      String email = user.email;
+      
+      // Faça o que quiser com o nome e o email (exibir na interface do usuário, processar, etc.)
+      print('Nome do usuário: $name');
+      print('Email do usuário: $email');
+    } else {
+      print('Nenhum usuário encontrado no banco de dados.');
+    }
+  } catch (e) {
+    print('Erro ao obter detalhes do usuário: $e');
+  }
 }
+
+  /*
+    static Future<void> updateUserEmail(String oldEmail, String newEmail) async {
+    try {
+      final db = await _getDB();
+
+      // Primeiro, obtenha o usuário com o email antigo
+      List<Map<String, dynamic>> userMaps = await db.query(
+        'USERS',
+        where: 'email = ?',
+        whereArgs: [oldEmail],
+      );
+
+      // Verifique se um usuário foi encontrado
+      if (userMaps.isNotEmpty) {
+        // Crie um objeto User a partir do Map
+        User user = User.fromJson(userMaps.first);
+
+        // Atualize o email do usuário
+        user.email = newEmail;
+
+        // Atualize o usuário no banco de dados
+        await db.update(
+          'USERS',
+          user.toJson(),
+          where: 'id = ?',
+          whereArgs: [user.id],
+        );
+      } else {
+        print('Nenhum usuário encontrado com o email: $oldEmail');
+      }
+    } catch (e) {
+      print('Erro ao atualizar o email do usuário: $e');
+    }
+  }
+  */
+  static Future<void> updateUserEmail(String oldEmail, String newEmail) async {
+  // Obtenha uma referência para o banco de dados
+  final db = await _getDB();
+
+  // Atualize o e-mail do usuário
+  await db.update(
+    'users',
+    {'email': newEmail},
+    where: 'email = ?',
+    whereArgs: [oldEmail],
+  );
+}
+}
+

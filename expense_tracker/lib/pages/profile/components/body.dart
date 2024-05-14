@@ -1,15 +1,63 @@
 import 'package:expense_tracker/pages/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'profileMenu.dart';
 import 'profilePic.dart';
+import 'package:expense_tracker/models/user_model.dart';
+import 'package:expense_tracker/services/database_helper.dart';
 
-class Body extends StatelessWidget {
+
+class Body extends StatefulWidget {
   const Body({super.key});
 
   @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  String userName = 'Loading...';
+  String userEmail = 'Loading...';
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    fetchUserDetails();
+  }
+
+  Future<String> getLoggedInUserEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('loggedInUserEmail');
+    if (email == null) {
+      // handle the case where there is no logged in user
+      throw Exception('No user is logged in');
+    }
+    return email;
+  }
+
+  Future<void> fetchUserDetails() async {
+    try {
+      List<User>? users = await DatabaseHelper.getUsers();
+      if (users != null && users.isNotEmpty) {
+        String loggedInEmail = await getLoggedInUserEmail(); // pega o email
+        for (User user in users) {
+          if (user.email == loggedInEmail) {
+            setState(() {
+              userName = user.name;
+              userEmail = user.email;
+            });
+            break;
+          }
+        }
+      }
+    } catch (e) {
+      // handle exception
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -27,7 +75,7 @@ class Body extends StatelessWidget {
           ProfileMenu(
             icon: LineAwesomeIcons.envelope,
             text: 'Alterar e-mail',
-            press: () => openEditEmailBox(context),
+            press: () => openEditEmailBox(context, getLoggedInUserEmail),
             backgroundColor: Colors.blue[100],
             backgroundOpacity: 0.2,
           ),
@@ -100,12 +148,12 @@ void openEditNameBox(BuildContext context) {
   );
 }
 
-void openEditEmailBox(BuildContext context) {
-  String currentEmail = '';
-  String newEmail = '';
-
+void openEditEmailBox(BuildContext context, Future<String> Function() getLoggedInUserEmail) async {
   TextEditingController currentEmailController = TextEditingController();
   TextEditingController newEmailController = TextEditingController();
+
+  // Obtenha o email do usuário logado
+  String loggedInEmail = await getLoggedInUserEmail();
 
   showDialog(
     context: context,
@@ -119,9 +167,6 @@ void openEditEmailBox(BuildContext context) {
             decoration: const InputDecoration(
               labelText: 'Email Atual',
             ),
-            onChanged: (value) {
-              currentEmail = value;
-            },
           ),
           const SizedBox(height: 10.0),
           TextField(
@@ -129,9 +174,6 @@ void openEditEmailBox(BuildContext context) {
             decoration: const InputDecoration(
               labelText: 'Novo Email',
             ),
-            onChanged: (value) {
-              newEmail = value;
-            },
           ),
         ],
       ),
@@ -141,7 +183,26 @@ void openEditEmailBox(BuildContext context) {
           child: const Text('Cancelar'),
         ),
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
+            // Obtenha o valor final do campo de texto
+            String currentEmail = currentEmailController.text;
+            String newEmail = newEmailController.text;
+
+            // Verifique se o email atual fornecido pelo usuário corresponde ao email armazenado
+            if (currentEmail == loggedInEmail) {
+              // Se corresponder, substitua o email armazenado pelo novo email
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.setString('loggedInUserEmail', newEmail);
+
+              // Atualize o email do usuário no banco de dados
+              // Você precisa adicionar uma função updateUserEmail no DatabaseHelper para fazer isso
+              await DatabaseHelper.updateUserEmail(loggedInEmail, newEmail);
+            } else {
+              // Se não corresponder, informe ao usuário que o email atual está incorreto
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('O email atual fornecido está incorreto.')),
+              );
+            }
             Navigator.of(context).pop();
           },
           child: const Text('Salvar'),

@@ -6,6 +6,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:expense_tracker/pages/login/components/log_error.dart';
 import 'package:expense_tracker/pages/chart_screens/home.dart';
 import 'package:collection/collection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -42,6 +43,8 @@ class _LoginFormState extends State<LoginForm> {
       if (user != null && user.password == password.text) {
         // Login bem-sucedido
         if (!mounted) return;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('loggedInUserEmail', user.email);
         Navigator.push(
           context,
           MaterialPageRoute(
