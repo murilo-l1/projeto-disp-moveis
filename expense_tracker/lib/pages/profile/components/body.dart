@@ -1,4 +1,5 @@
 import 'package:expense_tracker/pages/login/login.dart';
+import 'package:expense_tracker/pages/profile/Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,7 +30,6 @@ class _BodyState extends State<Body> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? email = prefs.getString('loggedInUserEmail');
     if (email == null) {
-      // handle the case where there is no logged in user
       throw Exception('No user is logged in');
     }
     return email;
@@ -51,7 +51,6 @@ class _BodyState extends State<Body> {
         }
       }
     } catch (e) {
-      // handle exception
     }
   }
 
@@ -65,15 +64,6 @@ class _BodyState extends State<Body> {
             height: 45,
           ),
           const ProfilePicture(),
-          /*
-          ProfileMenu(
-            icon: LineAwesomeIcons.user,
-            text: 'Editar nome',
-            press: () => openEditNameBox(context, getLoggedInUserEmail),
-            backgroundColor: Colors.blue[100],
-            backgroundOpacity: 0.20,
-          ),
-          */
           const SizedBox(
             height: 45,
           ),
@@ -113,70 +103,7 @@ class _BodyState extends State<Body> {
 }
 
 
-void openEditNameBox(BuildContext context, Future<String> Function() getLoggedInUserEmail) async {
-  TextEditingController currentNameController = TextEditingController();
-  TextEditingController newNameController = TextEditingController();
 
-  // Obtenha o email do usuário logado
-  String loggedInEmail = await getLoggedInUserEmail();
-
-  showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: const Text('Editar Nome'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: currentNameController,
-            decoration: const InputDecoration(
-              labelText: 'Nome Atual',
-            ),
-          ),
-          const SizedBox(height: 10.0),
-          TextField(
-            controller: newNameController,
-            decoration: const InputDecoration(
-              labelText: 'Novo Nome',
-            ),
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancelar'),
-        ),
-        ElevatedButton(
-          onPressed: () async {
-            // Obtenha o valor final do campo de texto
-            String currentName = currentNameController.text;
-            String newName = newNameController.text;
-
-            // Verifique se o nome atual fornecido pelo usuário corresponde ao nome armazenado
-            // Você precisa adicionar uma função getUserName no DatabaseHelper para fazer isso
-            String? storedName = await DatabaseHelper.getUserName(loggedInEmail);
-
-            if (currentName == storedName) {
-              // Se corresponder, substitua o nome armazenado pelo novo nome
-              // Você precisa adicionar uma função updateUserName no DatabaseHelper para fazer isso
-              await DatabaseHelper.updateUserName(loggedInEmail, newName);
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              await prefs.setString('loggedInUserName', newName);
-              Navigator.pop(context);
-            } else {
-              // Se não corresponder, informe ao usuário que o nome atual está incorreto
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('O nome atual fornecido está incorreto.')),
-              );
-            }
-          },
-          child: const Text('Salvar'),
-        ),
-      ],
-    ),
-  );
-}
 void openEditEmailBox(BuildContext context, Future<String> Function() getLoggedInUserEmail) async {
   TextEditingController currentEmailController = TextEditingController();
   TextEditingController newEmailController = TextEditingController();
@@ -212,30 +139,32 @@ void openEditEmailBox(BuildContext context, Future<String> Function() getLoggedI
           child: const Text('Cancelar'),
         ),
         ElevatedButton(
-          onPressed: () async {
-            // Obtenha o valor final do campo de texto
-            String currentEmail = currentEmailController.text;
-            String newEmail = newEmailController.text;
+  onPressed: () async {
+    // Obtenha o valor final do campo de texto
+    String currentEmail = currentEmailController.text;
+    String newEmail = newEmailController.text;
+    if (currentEmail == loggedInEmail) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('loggedInUserEmail', newEmail);
 
-            // Verifique se o email atual fornecido pelo usuário corresponde ao email armazenado
-            if (currentEmail == loggedInEmail) {
-              // Se corresponder, substitua o email armazenado pelo novo email
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              await prefs.setString('loggedInUserEmail', newEmail);
+      await DatabaseHelper.updateUserEmail(loggedInEmail, newEmail);
+      Navigator.pop(context);
 
-              // Atualize o email do usuário no banco de dados
-              // Você precisa adicionar uma função updateUserEmail no DatabaseHelper para fazer isso
-              await DatabaseHelper.updateUserEmail(loggedInEmail, newEmail);
-              Navigator.pop(context);
-            } else {
-              // Se não corresponder, informe ao usuário que o email atual está incorreto
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('O email atual fornecido está incorreto.')),
-              );
-            }
-          },
-          child: const Text('Salvar'),
+      // Navegue para a tela de perfil
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ProfileScreen(),
         ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('O email atual fornecido está incorreto.')),
+      );
+    }
+  },
+  child: const Text('Salvar'),
+),
       ],
     ),
   );
@@ -245,7 +174,6 @@ void openEditPasswordBox(BuildContext context, Future<String> Function() getLogg
   TextEditingController currentPasswordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
 
-  // Obtenha o email do usuário logado
   String loggedInEmail = await getLoggedInUserEmail();
 
   showDialog(
@@ -279,21 +207,14 @@ void openEditPasswordBox(BuildContext context, Future<String> Function() getLogg
         ),
         ElevatedButton(
           onPressed: () async {
-            // Obtenha o valor final do campo de texto
             String currentPassword = currentPasswordController.text;
             String newPassword = newPasswordController.text;
-
-            // Verifique se a senha atual fornecida pelo usuário corresponde à senha armazenada
-            // Você precisa adicionar uma função getUserPassword no DatabaseHelper para fazer isso
             String? storedPassword = await DatabaseHelper.getUserPassword(loggedInEmail);
 
             if (currentPassword == storedPassword) {
-              // Se corresponder, substitua a senha armazenada pela nova senha
-              // Você precisa adicionar uma função updateUserPassword no DatabaseHelper para fazer isso
               await DatabaseHelper.updateUserPassword(loggedInEmail, newPassword);
               Navigator.pop(context);
             } else {
-              // Se não corresponder, informe ao usuário que a senha atual está incorreta
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('A senha atual fornecida está incorreta.')),
               );

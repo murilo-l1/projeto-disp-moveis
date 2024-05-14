@@ -2,7 +2,6 @@ import 'package:expense_tracker/models/user_model.dart';
 import 'package:expense_tracker/services/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:expense_tracker/pages/login/components/botoes_social.dart';
 import 'package:expense_tracker/pages/login/login.dart';
 
 class Body extends StatelessWidget {
@@ -34,7 +33,7 @@ class Body extends StatelessWidget {
                 ),
               ),
               const Text(
-                "Complete os espaços \nou continue com sua rede social",
+                "Complete os espaços \n",
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
@@ -50,12 +49,13 @@ class Body extends StatelessWidget {
               ),
               insertPasswordAgain(),
               const SizedBox(
-                height: 30,
+                height: 50,
               ),
               buttonLogin(context, formKey, validateEmail, validatePassword),
               const SizedBox(
                 height: 30,
               ),
+              /*
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -73,6 +73,7 @@ class Body extends StatelessWidget {
                   ),
                 ],
               ),
+              */
             ],
           ),
         ),

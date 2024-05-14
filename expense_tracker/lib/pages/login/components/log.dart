@@ -1,5 +1,4 @@
 import 'package:expense_tracker/models/user_model.dart';
-import 'package:expense_tracker/pages/esqueci_senha/esqueci_senha.dart';
 import 'package:expense_tracker/services/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -79,9 +78,10 @@ class _LoginFormState extends State<LoginForm> {
           ),
           insertPassword(),
           const SizedBox(
-            height: 20,
+            height: 60,
           ),
           Error(errors: errors),
+          /*
           Row(
             children: [
               Checkbox(
@@ -114,6 +114,7 @@ class _LoginFormState extends State<LoginForm> {
               )
             ],
           ),
+          */
           isLoginTrue
               ? const Text(
                   "Email ou senha incorretos",
@@ -122,7 +123,7 @@ class _LoginFormState extends State<LoginForm> {
               : const SizedBox(),
           buttonLogin(context, formKey, validateEmail, validatePassword, Login),
           const SizedBox(
-            height: 20,
+            height: 60,
           ),
         ],
       ),
