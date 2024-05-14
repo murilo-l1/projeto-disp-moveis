@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               shrinkWrap: true,
-              children: [
+              children: const [
                 ExpenseItem(category: 'Alimentação'),
                 ExpenseItem(category: 'Transporte'),
                 ExpenseItem(category: 'Lazer'),

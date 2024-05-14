@@ -45,6 +45,7 @@ class _LoginFormState extends State<LoginForm> {
         if (!mounted) return;
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('loggedInUserEmail', user.email);
+        await prefs.setString('loggedInUserName', user.name);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -65,7 +66,6 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 }
-
 
   @override
   Widget build(BuildContext context) {

@@ -135,6 +135,62 @@ class DatabaseHelper {
   }
 }
 
+static Future<String?> getUserPassword(String email) async {
+  try {
+    final db = await _getDB();
+
+    // Obtenha o usuário com o email fornecido
+    List<Map<String, dynamic>> userMaps = await db.query(
+      'USERS',
+      where: 'email = ?',
+      whereArgs: [email],
+    );
+
+    // Verifique se um usuário foi encontrado
+    if (userMaps.isNotEmpty) {
+      // Crie um objeto User a partir do Map
+      User user = User.fromJson(userMaps.first);
+
+      // Retorne a senha do usuário
+      return user.password;
+    } else {
+      print('Nenhum usuário encontrado com o email: $email');
+      return null;
+    }
+  } catch (e) {
+    print('Erro ao obter a senha do usuário: $e');
+    return null;
+  }
+}
+
+static Future<String?> getUserName(String email) async {
+  try {
+    final db = await _getDB();
+
+    // Obtenha o usuário com o email fornecido
+    List<Map<String, dynamic>> userMaps = await db.query(
+      'USERS',
+      where: 'email = ?',
+      whereArgs: [email],
+    );
+
+    // Verifique se um usuário foi encontrado
+    if (userMaps.isNotEmpty) {
+      // Crie um objeto User a partir do Map
+      User user = User.fromJson(userMaps.first);
+
+      // Retorne a senha do usuário
+      return user.name;
+    } else {
+      print('Nenhum usuário encontrado com o email: $email');
+      return null;
+    }
+  } catch (e) {
+    print('Erro ao obter a senha do usuário: $e');
+    return null;
+  }
+}
+
   /*
     static Future<void> updateUserEmail(String oldEmail, String newEmail) async {
     try {
@@ -171,16 +227,40 @@ class DatabaseHelper {
   }
   */
   static Future<void> updateUserEmail(String oldEmail, String newEmail) async {
-  // Obtenha uma referência para o banco de dados
-  final db = await _getDB();
+    // Obtenha uma referência para o banco de dados
+    final db = await _getDB();
 
-  // Atualize o e-mail do usuário
-  await db.update(
-    'users',
-    {'email': newEmail},
-    where: 'email = ?',
-    whereArgs: [oldEmail],
-  );
-}
+    // Atualize o e-mail do usuário
+    await db.update(
+      'users',
+      {'email': newEmail},
+      where: 'email = ?',
+      whereArgs: [oldEmail],
+    );
+  }
+  static Future<void> updateUserPassword(String email, String newPassword) async {
+    // Obtenha uma referência para o banco de dados
+    final db = await _getDB();
+
+    // Atualize a senha do usuário
+    await db.update(
+      'users',
+      {'password': newPassword},
+      where: 'email = ?',
+      whereArgs: [email],
+    );
+  }
+  static Future<void> updateUserName(String email, String newName) async {
+    // Obtenha a referência do banco de dados
+    final db = await _getDB();
+
+    // Atualize o nome do usuário
+    await db.update(
+      'users',
+      {'name': newName},
+      where: 'email = ?',
+      whereArgs: [email],
+    );
+  }
 }
 

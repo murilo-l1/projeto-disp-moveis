@@ -8,7 +8,7 @@ class User {
     required this.email,
     required this.password,
     this.id,
-  }): this.name = email.split('@')[0];
+  }): name = email.split('@')[0];
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -26,7 +26,7 @@ class User {
       };
   
   void setName(String newName) {
-    this.name = newName;
+    name = newName;
   }
 }
 
