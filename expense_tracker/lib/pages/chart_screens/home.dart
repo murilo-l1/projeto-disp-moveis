@@ -15,10 +15,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.grey[200],
       appBar: buildAppBar(context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -91,6 +91,8 @@ AppBar buildAppBar(BuildContext context) {
     ],
   );
 }
+
+
 
 // quando o usario for inserir numa nova despesa, essa funcao sera chamada
 void openExpenseBox(BuildContext context, String category) {
@@ -192,6 +194,7 @@ void openExpenseBox(BuildContext context, String category) {
               if (result != 0) {
                 Navigator.of(context).pop();
                 showSuccessDialog(context);
+                refreshPage(context);
               }
             } else {
               showErrorMessage(context);
@@ -240,9 +243,18 @@ void showSuccessDialog(BuildContext context) {
   );
 }
 
+void refreshPage(BuildContext context) {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const HomePage(),
+    ),
+  );
+}
+
 class ExpenseItem extends StatelessWidget {
   final String category;
-  
+   
 
   const ExpenseItem({super.key, required this.category});
 

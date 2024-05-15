@@ -8,8 +8,6 @@ class DatabaseHelper {
   static const int _version = 1;
   static const String _databaseName = 'expense_tracker.db';
 
-  // Pra poder adicionar o campo de usuário corretamente é necessário adicionar:
-  // userId INTEGER FOREIGN KEY(userId) REFERENCES USERS(id)
   static Future<Database> _getDB() async {
     return openDatabase(join(await getDatabasesPath(), _databaseName),
         onCreate: (db, version) async {
