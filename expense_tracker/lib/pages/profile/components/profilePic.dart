@@ -31,7 +31,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
   return email;
 }
 
-  Future<void> fetchUserDetails() async {
+    Future<void> fetchUserDetails() async {
   try {
     List<User>? users = await DatabaseHelper.getUsers();
     if (users != null && users.isNotEmpty) {
@@ -50,6 +50,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
     // handle exception
   }
 }
+
 
   @override
   Widget build(BuildContext context) {

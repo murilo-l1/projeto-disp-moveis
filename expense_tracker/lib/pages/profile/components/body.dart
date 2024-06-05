@@ -139,32 +139,32 @@ void openEditEmailBox(BuildContext context, Future<String> Function() getLoggedI
           child: const Text('Cancelar'),
         ),
         ElevatedButton(
-  onPressed: () async {
-    // Obtenha o valor final do campo de texto
-    String currentEmail = currentEmailController.text;
-    String newEmail = newEmailController.text;
-    if (currentEmail == loggedInEmail) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('loggedInUserEmail', newEmail);
+          onPressed: () async {
+            // Obtenha o valor final do campo de texto
+            String currentEmail = currentEmailController.text;
+            String newEmail = newEmailController.text;
+            if (currentEmail == loggedInEmail) {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.setString('loggedInUserEmail', newEmail);
 
-      await DatabaseHelper.updateUserEmail(loggedInEmail, newEmail);
-      Navigator.pop(context);
+              await DatabaseHelper.updateUserEmail(loggedInEmail, newEmail);
+              Navigator.pop(context);
 
-      // Navegue para a tela de perfil
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ProfileScreen(),
+              // Navegue para a tela de perfil
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProfileScreen(),
+                ),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('O email atual fornecido está incorreto.')),
+              );
+            }
+          },
+          child: const Text('Salvar'),
         ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('O email atual fornecido está incorreto.')),
-      );
-    }
-  },
-  child: const Text('Salvar'),
-),
       ],
     ),
   );
