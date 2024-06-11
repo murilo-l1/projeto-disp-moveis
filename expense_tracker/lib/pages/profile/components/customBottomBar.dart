@@ -1,9 +1,10 @@
-import 'package:expense_tracker/pages/chart_screens/historical.dart';
-import 'package:expense_tracker/pages/chart_screens/home.dart';
+import 'package:expense_tracker/pages/historical.dart';
+import 'package:expense_tracker/pages/home.dart';
 import 'package:expense_tracker/pages/profile/Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:expense_tracker/enum/enums.dart';
+import 'package:expense_tracker/pages/currency-api/widgets/currency-page.dart';
 
 class customBottomBarNav extends StatelessWidget {
   const customBottomBarNav({
@@ -62,6 +63,21 @@ class customBottomBarNav extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const HistoricalPage(),
+                ),
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.currency_exchange,
+                size: 30,
+                color: MenuState.currency == selectedMenu
+                    ? Colors.blue
+                    : inActiveIconColor,
+              ),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CurrencyPage(),
                 ),
               ),
             ),

@@ -92,8 +92,6 @@ AppBar buildAppBar(BuildContext context) {
   );
 }
 
-
-
 // quando o usario for inserir numa nova despesa, essa funcao sera chamada
 void openExpenseBox(BuildContext context, String category) {
   // Variáveis para armazenar os valores inseridos pelo usuário
@@ -255,8 +253,7 @@ void refreshPage(BuildContext context) {
 class ExpenseItem extends StatelessWidget {
   final String category;
    
-
-  const ExpenseItem({super.key, required this.category});
+const ExpenseItem({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {

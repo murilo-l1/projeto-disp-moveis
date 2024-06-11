@@ -1,6 +1,6 @@
 import 'package:expense_tracker/enum/enums.dart';
 import 'package:expense_tracker/models/expense_model.dart';
-import 'package:expense_tracker/pages/chart_screens/home.dart';
+import 'package:expense_tracker/pages/home.dart';
 import 'package:expense_tracker/pages/profile/components/customBottomBar.dart';
 import 'package:expense_tracker/services/database_helper.dart';
 import 'package:flutter/material.dart';
@@ -14,33 +14,30 @@ class HistoricalPage extends StatefulWidget {
 }
 
 class _HistoricalPageState extends State<HistoricalPage> {
+  List<Expense> expenses = [];
 
-
-List<Expense> expenses = [];
-
-
-   @override
+  @override
   void initState() {
     super.initState();
     fetchExpenses();
   }
 
   Future<void> fetchExpenses() async {
-  List<Expense>? fetchedExpenses = await DatabaseHelper.getExpenses();
-  
-  if (fetchedExpenses != null && fetchedExpenses.isNotEmpty) {
-    setState(() {
-      expenses = fetchedExpenses;
-    });
-  } else {
-    setState(() {
-      expenses = [];
-      //monthExpenses = List.filled(12, 0);
-    });
-  }
-}
+    List<Expense>? fetchedExpenses = await DatabaseHelper.getExpenses();
 
-List<double> createMonthExpensesList() {
+    if (fetchedExpenses != null && fetchedExpenses.isNotEmpty) {
+      setState(() {
+        expenses = fetchedExpenses;
+      });
+    } else {
+      setState(() {
+        expenses = [];
+        //monthExpenses = List.filled(12, 0);
+      });
+    }
+  }
+
+  List<double> createMonthExpensesList() {
     List<double> monthExpenses = List.filled(12, 0.0);
 
     for (int i = 0; i < 12; i++) {
@@ -51,11 +48,13 @@ List<double> createMonthExpensesList() {
       // Filter expenses by month
       List<Expense> expensesInMonth = expenses
           .where((expense) =>
-              '${expense.date.year}-${expense.date.month.toString().padLeft(2, '0')}' == yearMonth)
+              '${expense.date.year}-${expense.date.month.toString().padLeft(2, '0')}' ==
+              yearMonth)
           .toList();
 
       // Calculate total expenses in the month
-      double totalExpensesInMonth = expensesInMonth.fold(0, (sum, expense) => sum + expense.amount);
+      double totalExpensesInMonth =
+          expensesInMonth.fold(0, (sum, expense) => sum + expense.amount);
 
       monthExpenses[i] = totalExpensesInMonth;
     }
@@ -63,8 +62,7 @@ List<double> createMonthExpensesList() {
     return monthExpenses;
   }
 
-  
-@override
+  @override
   Widget build(BuildContext context) {
     List<double> monthExpenses = createMonthExpensesList();
     return Scaffold(

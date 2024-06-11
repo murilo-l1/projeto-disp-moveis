@@ -3,7 +3,7 @@ import 'package:expense_tracker/services/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:expense_tracker/pages/login/components/log_error.dart';
-import 'package:expense_tracker/pages/chart_screens/home.dart';
+import 'package:expense_tracker/pages/home.dart';
 import 'package:collection/collection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,44 +27,46 @@ class _LoginFormState extends State<LoginForm> {
   final password = TextEditingController();
 
   Login() async {
-  final List<String> errors = [];
+    final List<String> errors = [];
 
-  // Validação dos campos de e-mail e senha
-  if (formKey.currentState!.validate()) {
-    // Imprime o e-mail e a senha inseridos
-    print('Tentativa de login - E-mail: ${email.text}, Senha: ${password.text}');
-    
-    // Verifica todos os usuários no banco de dados
-    final List<User>? users = await DatabaseHelper.getUsers();
-    if (users != null) {
-      // Procura pelo usuário com o e-mail fornecido
-      final User? user = users.firstWhereOrNull((user) => user.email == email.text);
-      if (user != null && user.password == password.text) {
-        // Login bem-sucedido
-        if (!mounted) return;
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('loggedInUserEmail', user.email);
-        await prefs.setString('loggedInUserName', user.name);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
+    // Validação dos campos de e-mail e senha
+    if (formKey.currentState!.validate()) {
+      // Imprime o e-mail e a senha inseridos
+      print(
+          'Tentativa de login - E-mail: ${email.text}, Senha: ${password.text}');
+
+      // Verifica todos os usuários no banco de dados
+      final List<User>? users = await DatabaseHelper.getUsers();
+      if (users != null) {
+        // Procura pelo usuário com o e-mail fornecido
+        final User? user =
+            users.firstWhereOrNull((user) => user.email == email.text);
+        if (user != null && user.password == password.text) {
+          // Login bem-sucedido
+          if (!mounted) return;
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('loggedInUserEmail', user.email);
+          await prefs.setString('loggedInUserName', user.name);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
+          );
+        } else {
+          // E-mail ou senha incorretos
+          setState(() {
+            isLoginTrue = true;
+          });
+        }
       } else {
-        // E-mail ou senha incorretos
+        // Nenhum usuário encontrado
         setState(() {
-          isLoginTrue = true;
+          errors.add("Nenhum usuário encontrado");
         });
       }
-    } else {
-      // Nenhum usuário encontrado
-      setState(() {
-        errors.add("Nenhum usuário encontrado");
-      });
     }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -131,60 +133,60 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   TextFormField insertPassword() {
-  return TextFormField(
-    controller: password, // Adicione o controlador de texto aqui
-    validator: validatePassword,
-    obscureText: true,
-    decoration: InputDecoration(
-      labelText: "Senha",
-      hintText: "Digite sua senha.",
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 45,
-        vertical: 20,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(22),
-        borderSide: const BorderSide(color: Colors.blue),
-        gapPadding: 10,
-      ),
-      suffixIcon: const Padding(
-        padding: EdgeInsets.only(right: 20),
-        child: Icon(
-          LineAwesomeIcons.lock,
-          size: 30,
+    return TextFormField(
+      controller: password, // Adicione o controlador de texto aqui
+      validator: validatePassword,
+      obscureText: true,
+      decoration: InputDecoration(
+        labelText: "Senha",
+        hintText: "Digite sua senha.",
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 45,
+          vertical: 20,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(22),
+          borderSide: const BorderSide(color: Colors.blue),
+          gapPadding: 10,
+        ),
+        suffixIcon: const Padding(
+          padding: EdgeInsets.only(right: 20),
+          child: Icon(
+            LineAwesomeIcons.lock,
+            size: 30,
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   TextFormField insertEmail() {
-  return TextFormField(
-    controller: email, // Adicione o controlador de texto aqui
-    keyboardType: TextInputType.emailAddress,
-    validator: validateEmail,
-    decoration: InputDecoration(
-      labelText: "Email",
-      hintText: "Digite seu email.",
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 45,
-        vertical: 20,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(22),
-        borderSide: const BorderSide(color: Colors.blue),
-        gapPadding: 10,
-      ),
-      suffixIcon: const Padding(
-        padding: EdgeInsets.only(right: 20),
-        child: Icon(
-          LineAwesomeIcons.envelope,
-          size: 30,
+    return TextFormField(
+      controller: email, // Adicione o controlador de texto aqui
+      keyboardType: TextInputType.emailAddress,
+      validator: validateEmail,
+      decoration: InputDecoration(
+        labelText: "Email",
+        hintText: "Digite seu email.",
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 45,
+          vertical: 20,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(22),
+          borderSide: const BorderSide(color: Colors.blue),
+          gapPadding: 10,
+        ),
+        suffixIcon: const Padding(
+          padding: EdgeInsets.only(right: 20),
+          child: Icon(
+            LineAwesomeIcons.envelope,
+            size: 30,
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   String? validateEmail(String? value) {
     if (value!.isEmpty) {
